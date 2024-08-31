@@ -11,6 +11,9 @@ importers:
       '@m2-ui/components':
         specifier: workspace:*
         version: link:packages/components
+      '@m2-ui/hooks':
+        specifier: workspace:*
+        version: link:packages/hooks
       '@m2-ui/theme-chalk':
         specifier: workspace:*
         version: link:packages/theme-chalk
@@ -25,6 +28,8 @@ importers:
         version: 3.4.38(typescript@5.5.4)
 
   packages/components: {}
+
+  packages/hooks: {}
 
   packages/theme-chalk: {}
 
