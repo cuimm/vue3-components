@@ -31,7 +31,7 @@ function _bem(
 }
 
 function createBEM(block: string) {
-  const namespace = defaultNamespace;
+  const namespace = defaultNamespace
 
   const b = (blockPrefix: string = '') =>
     _bem(defaultNamespace, block, blockPrefix, '', '')
