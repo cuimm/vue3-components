@@ -19,7 +19,7 @@ const style = computed(() => {
   if (!color || !size) return
   return {
     ...(size ? { fontSize: `${size}px` } : {}),
-    ...(color ? { color: color } : {}),
+    ...(color ? { color: color } : {})
   }
 })
 </script>

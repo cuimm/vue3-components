@@ -19,5 +19,13 @@
     "typescript": "^5.5.4",
     "unplugin-vue-define-options": "^1.4.9",
     "vue": "^3.4.38"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.9.1",
+    "@vue/eslint-config-typescript": "^13.0.0",
+    "eslint": "^9.9.1",
+    "eslint-plugin-vue": "^9.27.0",
+    "globals": "^15.9.0",
+    "typescript-eslint": "^8.3.0"
   }
 }

@@ -33,35 +33,31 @@ function _bem(
 function createBEM(block: string) {
   const namespace = defaultNamespace
 
-  const b = (blockPrefix: string = '') =>
+  const b = (blockPrefix = '') =>
     _bem(defaultNamespace, block, blockPrefix, '', '')
 
-  const e = (element: string = '') =>
+  const e = (element = '') =>
     element ? _bem(defaultNamespace, block, '', element, '') : ''
 
-  const m = (modifier: string = '') =>
+  const m = (modifier = '') =>
     modifier ? _bem(defaultNamespace, block, '', '', modifier) : ''
 
-  const be = (blockPrefix: string = '', element: string = '') =>
+  const be = (blockPrefix = '', element = '') =>
     blockPrefix && element
       ? _bem(defaultNamespace, block, blockPrefix, element, '')
       : ''
 
-  const bm = (blockPrefix: string = '', modifier: string = '') =>
+  const bm = (blockPrefix = '', modifier = '') =>
     blockPrefix && modifier
       ? _bem(defaultNamespace, block, blockPrefix, '', modifier)
       : ''
 
-  const em = (element: string = '', modifier: string = '') =>
+  const em = (element = '', modifier = '') =>
     element && modifier
       ? _bem(defaultNamespace, block, '', element, modifier)
       : ''
 
-  const bem = (
-    blockPrefix: string = '',
-    element: string = '',
-    modifier: string = ''
-  ) =>
+  const bem = (blockPrefix = '', element = '', modifier = '') =>
     blockPrefix && element && modifier
       ? _bem(defaultNamespace, block, blockPrefix, element, modifier)
       : ''
