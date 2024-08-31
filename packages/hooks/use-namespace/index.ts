@@ -92,6 +92,8 @@ export const useNamespace = (block: string) => {
   return createBEM(block)
 }
 
+export type UseNamespaceReturnType = ReturnType<typeof useNamespace>
+
 /*
 const bem = useNamespace('icon')
 console.log(bem.b()); // m2-icon
