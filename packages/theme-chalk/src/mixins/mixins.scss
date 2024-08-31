@@ -1,0 +1,37 @@
+@use 'config' as *; // @use用于导入其他模块并创建命名空间管理，是@import的增强版。@import同一个文件多次，在css文件也会出现多次，@use同一个文件多次，在css文件只会出现1次
+@forward 'config'; // @forward用于重新导出模块内容，简化模块之间的依赖管理
+
+// .m2-button {}
+@mixin b($block) {
+  $B: $namespace + '-' + $block;
+  .#{$B} {
+    @content;
+  }
+}
+
+// .m2-button.is-desabled
+@mixin when($state) {
+  @at-root {
+    &.#{$state-prefix + $state} {
+      @content;
+    }
+  }
+}
+
+// &--primary => .m2-button--primary
+@mixin m($modifier) {
+  @at-root {
+    #{& + $modifier-separator + $modifier} {
+      @content;
+    }
+  }
+}
+
+// &__header  => .m2-button__header
+@mixin e($element) {
+  @at-root {
+    #{& + $element-separator + $element} {
+      @content;
+    }
+  }
+}
