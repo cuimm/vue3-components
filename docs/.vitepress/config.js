@@ -5,7 +5,8 @@ module.exports = {
     lastUpdated: '上次更新',
     docsDir: 'docs',
     editLink: {
-      pattern: 'https://github.com/cuimm/vue3-components/docs/:path',
+      pattern:
+        'https://github.com/cuimm/vue3-components/edit/master/docs/:path',
       text: 'Edit this page on GitHub'
     },
     editLinkText: '编辑此网站',
