@@ -16,10 +16,10 @@ function _bem(namespace: string, block: string, blockPrefix: string, element: st
     cls += `-${blockPrefix}`
   }
   if (element) {
-    cls += `--${element}`
+    cls += `__${element}`
   }
   if (modifier) {
-    cls += `__${modifier}`
+    cls += `--${modifier}`
   }
   return cls
 }
@@ -75,14 +75,14 @@ export type UseNamespaceReturnType = ReturnType<typeof useNamespace>
 
 /*
 const bem = useNamespace('icon')
-console.log(bem.b()); // m2-icon
-console.log(bem.b('box')); // m2-icon-box
-console.log(bem.e('element')); // m2-icon--element
-console.log(bem.m('modifier')); // m2-icon__modifier
-console.log(bem.be('box', 'element')); // m2-icon-box--element
-console.log(bem.bm('box', 'modifier')); // m2-icon-box__modifier
-console.log(bem.em('element', 'modifier')); // m2-icon--element__modifier
-console.log(bem.bem('box', 'element', 'modifier')); // m2-icon-box--element__modifier
-console.log(bem.is('disabled')); // is-disabled
-console.log(bem.is('disabled', false)); // 空
+console.log(bem.b()) // m2-icon
+console.log(bem.b('box')) // m2-icon-box
+console.log(bem.e('element')) // m2-icon__element
+console.log(bem.m('modifier')) // m2-icon--modifier
+console.log(bem.be('box', 'element')) // m2-icon-box__element
+console.log(bem.bm('box', 'modifier')) // m2-icon-box--modifier
+console.log(bem.em('element', 'modifier')) // m2-icon__element--modifier
+console.log(bem.bem('box', 'element', 'modifier')) // m2-icon-box__element--modifier
+console.log(bem.is('disabled')) // is-disabled
+console.log(bem.is('disabled', false)) // 空
 */

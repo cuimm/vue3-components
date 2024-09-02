@@ -3,3 +3,9 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+namespace JSX {
+  interface IntrinsicElements {
+    [key: string]: any
+  }
+}

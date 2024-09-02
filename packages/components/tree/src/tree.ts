@@ -27,6 +27,10 @@ export const treeProps = {
     type: Array as PropType<KeyType[]>,
     default: () => []
   },
+  nodePaddingLeft: {
+    type: Number,
+    default: 16
+  },
   keyField: {
     type: String,
     default: 'key'

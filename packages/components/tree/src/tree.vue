@@ -1,11 +1,22 @@
 <template>
-  <div :class="ns.b()">{{ flattenTreeNodes }}</div>
+  <div :class="ns.b()">
+    <m2-tree-node
+      v-for="node in flattenTreeNodes"
+      :key="node.key"
+      :node="node"
+      :expanded="isExpanded(node)"
+      :node-padding-left="nodePaddingLeft"
+      @toggle="toggleExpand"
+    >
+    </m2-tree-node>
+  </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
 import { useNamespace } from '@m2-ui/hooks/use-namespace'
 import { treeProps, type TreeNode, type TreeOption } from './tree'
+import M2TreeNode from './tree-node.vue'
 
 const ns = useNamespace('tree')
 
@@ -28,6 +39,31 @@ watch(
     immediate: true
   }
 )
+
+/** @description 切换折叠/展开 */
+function toggleExpand(node: TreeNode) {
+  const expandedKeys = expandedKeysRef.value
+  if (expandedKeys.has(node.key)) {
+    collpase(node)
+  } else {
+    expand(node)
+  }
+}
+
+/** @description 展开 */
+function expand(node: TreeNode) {
+  expandedKeysRef.value.add(node.key)
+}
+
+/** @description 折叠 */
+function collpase(node: TreeNode) {
+  expandedKeysRef.value.delete(node.key)
+}
+
+/** @description 节点是否展开 */
+function isExpanded(node: TreeNode) {
+  return expandedKeysRef.value.has(node.key)
+}
 
 /** @description 拍平要展开的树结构【深度遍历】 */
 function formatFlattenTreeNodes() {

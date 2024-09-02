@@ -1,0 +1,29 @@
+@use './mixins/mixins.scss' as *;
+@use './common/var.scss' as *;
+
+@include b(tree) {
+  display: inline-block;
+  width: 100%;
+}
+
+@include b(tree-node) {
+  padding: 5px 0;
+  font-size: 14px;
+  &:hover {
+    background-color: $m2-tree-node-background-color;
+  }
+
+  @include e(content) {
+    cursor: pointer;
+  }
+
+  @include e(expand-icon) {
+    display: inline-block;
+    vertical-align: middle;
+    transform: rotate(0deg);
+    transition: transform 0.2s ease-in;
+    &.expanded {
+      transform: rotate(90deg);
+    }
+  }
+}
