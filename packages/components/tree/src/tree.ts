@@ -15,12 +15,16 @@ export interface TreeOption {
 export interface TreeNode extends Required<TreeOption> {
   level: number
   children: TreeNode[]
-  rawValue: TreeOption
+  rawNode: TreeOption
 }
 
 export const treeProps = {
   data: {
     type: Array as PropType<TreeOption[]>,
+    default: () => []
+  },
+  defaultExpandedKeys: {
+    type: Array as PropType<KeyType[]>,
     default: () => []
   },
   keyField: {

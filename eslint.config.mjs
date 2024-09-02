@@ -5,6 +5,9 @@ import pluginVue from 'eslint-plugin-vue' // Vue.js 的 ESLint 插件，用于�
 
 export default [
   {
+    ignores: ['node_modules', 'dist', '**/*.css', '**/*.jpg', '**/*.jpeg', '**/*.png', '**/*.gif', '**/*.d.ts']
+  },
+  {
     files: ['**/*.{js,mjs,cjs,ts,vue}'] // 指定 ESLint 要检查的文件类型，包括 JS、MJS、CJS、TS 和 Vue 文件
   },
   {
@@ -37,9 +40,7 @@ export default [
   {
     rules: {
       'no-var': 2,
-      '@typescript-eslint/prefer-for-of': 'off',
-      '@typescript-eslint/no-inferrable-types': 2,
-      'typescript-eslint/no-explicit-any': 2
+      '@typescript-eslint/no-explicit-any': 'off'
     }
   }
 ]

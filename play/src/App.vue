@@ -16,6 +16,7 @@
   <!-- Tree -->
   <m2-tree
     :data="treeData"
+    :default-expanded-keys="['40', '41']"
     key-field="key2"
     label-field="label2"
     children-field="children2"

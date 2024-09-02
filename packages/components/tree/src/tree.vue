@@ -1,31 +1,61 @@
 <template>
-  <div :class="ns.b()">tree</div>
+  <div :class="ns.b()">{{ flattenTreeNodes }}</div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useNamespace } from '@m2-ui/hooks/use-namespace'
 import { treeProps, type TreeNode, type TreeOption } from './tree'
+
+const ns = useNamespace('tree')
 
 defineOptions({
   name: 'M2Tree'
 })
-
-const ns = useNamespace('tree')
 const props = defineProps(treeProps)
 
-const treeNodes = ref<TreeNode[]>([])
+const treeNodesRef = ref<TreeNode[]>([]) // 格式化后的数结构
+const expandedKeysRef = ref(new Set(props.defaultExpandedKeys)) // 默认展开的被拍平后的树结构
+
+const flattenTreeNodes = computed(formatFlattenTreeNodes) // 拍平的树结构
 
 watch(
   () => props.data,
   (data: TreeOption[]) => {
-    treeNodes.value = createTreeNodes(data)
+    treeNodesRef.value = createTreeNodes(data)
   },
   {
     immediate: true
   }
 )
-console.log(treeNodes.value)
+
+/** @description 拍平要展开的树结构【深度遍历】 */
+function formatFlattenTreeNodes() {
+  const flattedNodes: TreeNode[] = [] // 要拍平的节点
+  const treeNodes = treeNodesRef.value // 格式化后的所有的树节点
+  const expandedKeys = expandedKeysRef.value // 要展开的keys
+  const stack: TreeNode[] = [] // 使用栈结构对树进行遍历
+
+  for (let index = treeNodes.length - 1; index >= 0; --index) {
+    stack.push(treeNodes[index])
+  }
+
+  while (stack.length) {
+    const node = stack.pop()
+    if (!node) return
+    flattedNodes.push(node)
+    if (expandedKeys.has(node.key)) {
+      const children = node.children
+      if (children) {
+        for (let index = children.length - 1; index >= 0; --index) {
+          stack.push(children[index])
+        }
+      }
+    }
+  }
+
+  return flattedNodes
+}
 
 /** @description 格式化用户传入的data option */
 function formatTreeOption(keyField: string, labelField: string, childrenField: string) {
@@ -56,7 +86,7 @@ function createTreeNodes(data: TreeOption[]): TreeNode[] {
         children: [],
         level: parentNode ? parentNode.level + 1 : 0,
         isLeaf: treeOption.isLeaf ?? children.length === 0, // 用户提供的isLeaf不为null或undefined时，以isLeaf为准，否则判断有没有children
-        rawValue: treeOption
+        rawNode: treeOption
       }
 
       if (children.length) {

@@ -14,7 +14,7 @@ export function createTreeData(level: number, parentNode = null as TreeOption | 
   if (level === 0) return []
   const data = new Array(6 - level).fill(0)
   return data.map((_, index) => {
-    const key = parentNode?.key ? `${parentNode?.key}_${level}${index}` : `${level}${index}`
+    const key = parentNode?.[keyField] ? `${parentNode?.[keyField]}_${level}${index}` : `${level}${index}`
     const node: TreeOption = {
       [keyField]: key,
       [labelField]: `${deepth + 1}层级`,
