@@ -17,7 +17,7 @@ export default [
   },
   pluginJs.configs.recommended, // 使用 ESLint 官方推荐的 JavaScript 规则配置
   ...tseslint.configs.recommended, // 使用 TypeScript ESLint 推荐的规则配置
-  ...tseslint.configs.stylistic,
+  // ...tseslint.configs.stylistic,
   ...pluginVue.configs['flat/essential'], // 使用 Vue.js 插件提供的基本规则配置
   {
     files: ['**/*.vue'], // 针对 Vue 文件做特殊配置
@@ -28,15 +28,18 @@ export default [
     },
     rules: {
       'vue/html-self-closing': 'off',
-      'vue/singleline-html-element-content-newline': 'error',
+      // 'vue/singleline-html-element-content-newline': 'error',
       'vue/multi-word-component-names': 'off',
-      'vue/prefer-import-from-vue': 'off'
-      // 'vue/max-attributes-per-line': 2,
+      'vue/prefer-import-from-vue': 'off',
+      'vue/max-attributes-per-line': 2
     }
   },
   {
     rules: {
-      'no-var': 2
+      'no-var': 2,
+      '@typescript-eslint/prefer-for-of': 'off',
+      '@typescript-eslint/no-inferrable-types': 2,
+      'typescript-eslint/no-explicit-any': 2
     }
   }
 ]

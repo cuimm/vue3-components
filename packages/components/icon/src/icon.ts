@@ -2,11 +2,11 @@ import type { PropType, ExtractPropTypes } from 'vue'
 
 export const iconProps = {
   color: {
-    type: String,
+    type: String
   },
   size: {
-    type: [Number, String] as PropType<number | string>,
-  },
+    type: [Number, String] as PropType<number | string>
+  }
 } as const
 
-type IconProps = ExtractPropTypes<typeof iconProps>
+export type IconProps = ExtractPropTypes<typeof iconProps>

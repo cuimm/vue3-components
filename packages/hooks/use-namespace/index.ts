@@ -10,13 +10,7 @@ const statePrefirx = 'is-'
  * @param modifier 装饰
  * @returns bem
  */
-function _bem(
-  namespace: string,
-  block: string,
-  blockPrefix: string,
-  element: string,
-  modifier: string
-) {
+function _bem(namespace: string, block: string, blockPrefix: string, element: string, modifier: string) {
   let cls = `${namespace}-${block}`
   if (blockPrefix) {
     cls += `-${blockPrefix}`
@@ -33,34 +27,23 @@ function _bem(
 function createBEM(block: string) {
   const namespace = defaultNamespace
 
-  const b = (blockPrefix = '') =>
-    _bem(defaultNamespace, block, blockPrefix, '', '')
+  const b = (blockPrefix = '') => _bem(defaultNamespace, block, blockPrefix, '', '')
 
-  const e = (element = '') =>
-    element ? _bem(defaultNamespace, block, '', element, '') : ''
+  const e = (element = '') => (element ? _bem(defaultNamespace, block, '', element, '') : '')
 
-  const m = (modifier = '') =>
-    modifier ? _bem(defaultNamespace, block, '', '', modifier) : ''
+  const m = (modifier = '') => (modifier ? _bem(defaultNamespace, block, '', '', modifier) : '')
 
   const be = (blockPrefix = '', element = '') =>
-    blockPrefix && element
-      ? _bem(defaultNamespace, block, blockPrefix, element, '')
-      : ''
+    blockPrefix && element ? _bem(defaultNamespace, block, blockPrefix, element, '') : ''
 
   const bm = (blockPrefix = '', modifier = '') =>
-    blockPrefix && modifier
-      ? _bem(defaultNamespace, block, blockPrefix, '', modifier)
-      : ''
+    blockPrefix && modifier ? _bem(defaultNamespace, block, blockPrefix, '', modifier) : ''
 
   const em = (element = '', modifier = '') =>
-    element && modifier
-      ? _bem(defaultNamespace, block, '', element, modifier)
-      : ''
+    element && modifier ? _bem(defaultNamespace, block, '', element, modifier) : ''
 
   const bem = (blockPrefix = '', element = '', modifier = '') =>
-    blockPrefix && element && modifier
-      ? _bem(defaultNamespace, block, blockPrefix, element, modifier)
-      : ''
+    blockPrefix && element && modifier ? _bem(defaultNamespace, block, blockPrefix, element, modifier) : ''
 
   // TS的函数重载
   const is: {
@@ -80,7 +63,7 @@ function createBEM(block: string) {
     bm,
     em,
     bem,
-    is,
+    is
   }
 }
 

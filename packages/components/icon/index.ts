@@ -1,4 +1,4 @@
-import { SFCWithInstall, withInstall } from '@m2-ui/utils/vue/install'
+import { type SFCWithInstall, withInstall } from '@m2-ui/utils/vue/install'
 import Icon from './src/icon.vue' // 导入vue文件
 
 export * from './src/icon' // 导出TS文件

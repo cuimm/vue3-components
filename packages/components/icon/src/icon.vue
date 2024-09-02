@@ -1,5 +1,8 @@
 <template>
-  <i :class="ns.b()" :style="style">
+  <i
+    :class="ns.b()"
+    :style="style"
+  >
     <slot></slot>
   </i>
 </template>
