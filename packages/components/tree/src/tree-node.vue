@@ -18,22 +18,22 @@
         :class="ns.e('label')"
         @click="handleLabelClick"
       >
-        {{ node.label }}
+        <m2-tree-node-context :node="node" />
       </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+import { computed } from 'vue'
 import { useNamespace } from '@m2-ui/hooks/use-namespace'
 import M2Switcher from '@m2-ui/components/internal-icon/switcher'
 import M2Loading from '@m2-ui/components/internal-icon/loading'
 import { treeNodeEmitts, treeNodeProps } from './tree-node'
-import { computed } from 'vue'
+import M2TreeNodeContext from './tree-node-context'
 
 defineOptions({ name: 'm2-tree-node' })
 
 const ns = useNamespace('tree-node')
-
 const props = defineProps(treeNodeProps)
 const emit = defineEmits(treeNodeEmitts)
 

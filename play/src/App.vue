@@ -21,14 +21,15 @@
     <m2-tree
       v-model:selected-keys="selectedKeysRef"
       :data="treeData"
-      :default-expanded-keys="['40']"
       selectable
       :multiple="true"
       :node-padding-left="30"
       key-field="key2"
       label-field="label2"
       children-field="children2"
-    />
+    >
+      <template #default="{ node }"> {{ node.key }} ~~ {{ node.label }} </template>
+    </m2-tree>
   </play-panel>
   <play-panel title="Tree异步加载">
     <m2-tree
@@ -38,7 +39,9 @@
       key-field="key2"
       label-field="label2"
       children-field="children2"
-    />
+    >
+      <template #default="{ node }"> {{ node.key }} __ {{ node.label }} </template>
+    </m2-tree>
   </play-panel>
 </template>
 

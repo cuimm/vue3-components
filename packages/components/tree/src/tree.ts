@@ -1,4 +1,12 @@
-import { type PropType, type ExtractPropTypes, Prop } from 'vue'
+import {
+  type PropType,
+  type ExtractPropTypes,
+  SetupContext,
+  SlotsType,
+  type InjectionKey,
+  VNode,
+  defineSlots
+} from 'vue'
 
 export type KeyType = string | number
 
@@ -19,6 +27,7 @@ export interface TreeNode extends Required<TreeOption> {
   rawNode: TreeOption
 }
 
+/** @description M2Tree Props */
 export const treeProps = {
   selectedKeys: {
     type: Array as PropType<KeyType[]>,
@@ -60,9 +69,26 @@ export const treeProps = {
     default: 'children'
   }
 } as const
-
 export type TreeProps = Partial<ExtractPropTypes<typeof treeProps>>
 
+/** @description M2Tree Emit */
 export const treeEmitts = {
   'update:selectedKeys': (keys: KeyType[]) => keys
 }
+export type TreeEmitts = typeof treeEmitts
+
+/** @description M2Tree Slot */
+export type TreeSlots = {
+  default: (props: { node: TreeNode }) => VNode[]
+}
+
+/** @description M2Tree SetupContext */
+export type TreeSetupContext = SetupContext<TreeEmitts, SlotsType<TreeSlots>>
+
+export interface TreeContext {
+  slots: TreeSetupContext['slots']
+  // emits: TreeSetupContext['emit']
+}
+
+/** @description M2Tree inject key */
+export const treeInjectKey: InjectionKey<TreeContext> = Symbol()

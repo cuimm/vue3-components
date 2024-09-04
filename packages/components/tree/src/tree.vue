@@ -11,21 +11,32 @@
       :node-padding-left="nodePaddingLeft"
       @select="handleNodeSelect"
       @toggle="toggleExpand"
-    >
-    </m2-tree-node>
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
+import { computed, provide, ref, useSlots, watch } from 'vue'
 import { useNamespace } from '@m2-ui/hooks/use-namespace'
-import { treeProps, type TreeNode, type TreeOption, type KeyType, treeEmitts } from './tree'
 import M2TreeNode from './tree-node.vue'
+import {
+  treeProps,
+  treeEmitts,
+  treeInjectKey,
+  type TreeNode,
+  type TreeOption,
+  type KeyType,
+  type TreeSlots
+} from './tree'
 
 defineOptions({ name: 'M2Tree' })
 
-const ns = useNamespace('tree')
+/** @description 向子组件provide 数据 */
+provide(treeInjectKey, {
+  slots: useSlots() as TreeSlots
+})
 
+const ns = useNamespace('tree')
 const props = defineProps(treeProps)
 const emit = defineEmits(treeEmitts)
 
