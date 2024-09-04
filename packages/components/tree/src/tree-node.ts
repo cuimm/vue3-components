@@ -1,4 +1,4 @@
-import { type ExtractPropTypes, PropType } from 'vue'
+import { type ExtractPropTypes, Prop, PropType } from 'vue'
 import { type TreeNode, type KeyType } from './tree'
 
 export const treeNodeProps = {
@@ -6,12 +6,16 @@ export const treeNodeProps = {
     type: Object as PropType<TreeNode>,
     required: true
   },
-  expanded: {
-    type: Boolean,
-    default: false
+  selectedKeys: {
+    type: Array as PropType<KeyType[]>,
+    default: () => []
   },
   loadingKeys: {
     type: Object as PropType<Set<KeyType>>
+  },
+  expanded: {
+    type: Boolean,
+    default: false
   },
   nodePaddingLeft: {
     type: Number,
@@ -22,7 +26,8 @@ export const treeNodeProps = {
 export type TreeNodeProps = Partial<ExtractPropTypes<typeof treeNodeProps>>
 
 export const treeNodeEmitts = {
-  toggle: (node: TreeNode) => node
+  toggle: (node: TreeNode) => node,
+  select: (node: TreeNode) => node
 }
 
 export type TreeNodeEmitts = typeof treeNodeEmitts

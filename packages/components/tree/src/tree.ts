@@ -19,9 +19,21 @@ export interface TreeNode extends Required<TreeOption> {
 }
 
 export const treeProps = {
+  selectedKeys: {
+    type: Array as PropType<KeyType[]>,
+    default: () => []
+  },
   data: {
     type: Array as PropType<TreeOption[]>,
     default: () => []
+  },
+  selectable: {
+    type: Boolean,
+    default: true
+  },
+  multiple: {
+    type: Boolean,
+    default: false
   },
   defaultExpandedKeys: {
     type: Array as PropType<KeyType[]>,
@@ -49,3 +61,7 @@ export const treeProps = {
 } as const
 
 export type TreeProps = Partial<ExtractPropTypes<typeof treeProps>>
+
+export const treeEmitts = {
+  'update:selectedKeys': (keys: KeyType[]) => keys
+}

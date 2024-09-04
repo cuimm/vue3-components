@@ -16,18 +16,21 @@
   </play-panel>
 
   <!-- Tree -->
-  <play-panel title="Tree">
-    <!-- 同步加载 -->
+  <play-panel title="Tree同步加载">
+    {{ selectedKeysRef }}
     <m2-tree
+      v-model:selected-keys="selectedKeysRef"
       :data="treeData"
       :default-expanded-keys="['40']"
-      :on-load="handleLoad"
+      selectable
+      :multiple="true"
       :node-padding-left="30"
       key-field="key2"
       label-field="label2"
       children-field="children2"
     />
-    <!-- 异步加载 -->
+  </play-panel>
+  <play-panel title="Tree异步加载">
     <m2-tree
       :data="treeAsyncData"
       :on-load="handleLoad"
@@ -42,12 +45,12 @@
 <script setup lang="ts">
 import { AddCircle, ArrowUndo } from '@vicons/ionicons5'
 import PlayPanel from './components/panel'
-import { treeData, treeAsyncData, handleLoad } from './components/tree'
+import { selectedKeysRef, treeData, treeAsyncData, handleLoad } from './components/tree'
 </script>
 
 <style lang="scss">
 .play-app__panel {
-  margin-bottom: 306x;
+  margin-bottom: 30px;
 }
 .play-app__panel-title {
   margin: 0;

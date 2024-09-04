@@ -5,8 +5,10 @@
       :key="node.key"
       :node="node"
       :expanded="isExpanded(node)"
+      :selected-keys="iSelectedKeysRef"
       :loading-keys="loadingKeysRef"
       :node-padding-left="nodePaddingLeft"
+      @select="handleNodeSelect"
       @toggle="toggleExpand"
     >
     </m2-tree-node>
@@ -16,7 +18,7 @@
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
 import { useNamespace } from '@m2-ui/hooks/use-namespace'
-import { treeProps, type TreeNode, type TreeOption, type KeyType } from './tree'
+import { treeProps, type TreeNode, type TreeOption, type KeyType, treeEmitts } from './tree'
 import M2TreeNode from './tree-node.vue'
 
 defineOptions({ name: 'M2Tree' })
@@ -24,12 +26,24 @@ defineOptions({ name: 'M2Tree' })
 const ns = useNamespace('tree')
 
 const props = defineProps(treeProps)
+const emit = defineEmits(treeEmitts)
 
+const iSelectedKeysRef = ref<KeyType[]>([])
 const treeNodesRef = ref<TreeNode[]>([]) // 格式化后的数结构
 const expandedKeysRef = ref(new Set(props.defaultExpandedKeys)) // 默认展开的被拍平后的树结构
 const loadingKeysRef = ref(new Set<KeyType>())
 
 const flattenTreeNodes = computed(formatFlattenTreeNodes) // 拍平的树结构
+
+watch(
+  () => props.selectedKeys,
+  selectedKeys => {
+    iSelectedKeysRef.value = selectedKeys
+  },
+  {
+    immediate: true
+  }
+)
 
 watch(
   () => props.data,
@@ -40,6 +54,30 @@ watch(
     immediate: true
   }
 )
+
+/** @description 选择节点 */
+function handleNodeSelect(node: TreeNode) {
+  if (!props.selectable) return
+
+  let keys = Array.from(iSelectedKeysRef.value)
+
+  if (props.multiple) {
+    const index = keys.findIndex(key => key === node.key)
+    if (index > -1) {
+      keys.splice(index, 1)
+    } else {
+      keys.push(node.key)
+    }
+  } else {
+    if (keys.includes(node.key)) {
+      keys = []
+    } else {
+      keys = [node.key]
+    }
+  }
+
+  emit('update:selectedKeys', keys)
+}
 
 /** @description 切换折叠/展开 */
 function toggleExpand(node: TreeNode) {

@@ -1,13 +1,15 @@
-import { ref } from 'vue'
-import { TreeNode, TreeOption } from '@m2-ui/components'
+import { ref, toRaw, type Ref } from 'vue'
+import { type TreeOption, type KeyType } from '@m2-ui/components'
 
 const keyField = 'key2'
 const labelField = 'label2'
 const childrenField = 'children2'
 
+export const selectedKeysRef = ref<KeyType[]>(['40'])
+
 // 1）同步加载
-export const treeData = ref(createTreeData(4)) as unknown as TreeOption[]
-console.log('treeData: ', createTreeData(4))
+export const treeData = ref(createTreeData(4)) as unknown as Ref<TreeOption[]>
+console.log('treeData: ', toRaw(treeData.value))
 
 // 2）异步加载tree
 export const treeAsyncData = ref(createAsyncData())

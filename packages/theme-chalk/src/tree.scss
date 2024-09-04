@@ -13,7 +13,13 @@
     background-color: $m2-tree-node-background-color;
   }
 
+  @include when(selected) {
+    background-color: burlywood;
+    cursor: pointer;
+  }
+
   @include e(content) {
+    display: flex;
     cursor: pointer;
   }
 
@@ -25,5 +31,9 @@
     &.expanded {
       transform: rotate(90deg);
     }
+  }
+
+  @include e('label') {
+    flex: 1;
   }
 }
