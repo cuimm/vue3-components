@@ -1,5 +1,5 @@
 <template>
-  <div :class="[ns.b(), ns.is('selected', isSelected)]">
+  <div :class="[ns.b(), ns.is('selected', isSelected), ns.is('disabled', disabled)]">
     <div
       :class="ns.e('content')"
       :style="{ paddingLeft: `${node.level * nodePaddingLeft}px` }"
@@ -14,11 +14,12 @@
           <m2-loading v-else></m2-loading>
         </m2-icon>
       </span>
-      <span
+      <div
         :class="ns.e('label')"
         @click="handleLabelClick"
-        >{{ node.label }}</span
       >
+        {{ node.label }}
+      </div>
     </div>
   </div>
 </template>
@@ -46,6 +47,7 @@ const loading = computed(() => {
 
 /** @description 选中 */
 const handleLabelClick = () => {
+  if (props.node.disabled) return
   emit('select', props.node)
 }
 

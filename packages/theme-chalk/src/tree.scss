@@ -7,10 +7,18 @@
 }
 
 @include b(tree-node) {
+  display: flex;
+  flex: 1;
   padding: 5px 0;
   font-size: 14px;
+  cursor: pointer;
+
   &:hover {
     background-color: $m2-tree-node-background-color;
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
   }
 
   @include when(selected) {
@@ -20,7 +28,7 @@
 
   @include e(content) {
     display: flex;
-    cursor: pointer;
+    width: 100%;
   }
 
   @include e(expand-icon) {
@@ -28,6 +36,7 @@
     vertical-align: middle;
     transform: rotate(0deg);
     transition: transform 0.2s ease-in;
+    cursor: pointer;
     &.expanded {
       transform: rotate(90deg);
     }

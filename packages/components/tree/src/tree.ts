@@ -8,6 +8,7 @@ export interface TreeOption {
   label?: KeyType
   children?: TreeOption[]
   isLeaf?: boolean
+  disabled?: boolean
   [key: string]: unknown
 }
 

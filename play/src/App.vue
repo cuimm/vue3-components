@@ -56,6 +56,6 @@ import { selectedKeysRef, treeData, treeAsyncData, handleLoad } from './componen
   margin: 0;
 }
 .play-app__panel-container {
-  background-color: antiquewhite;
+  background-color: #f0f0f0;
 }
 </style>

@@ -5,6 +5,7 @@
       :key="node.key"
       :node="node"
       :expanded="isExpanded(node)"
+      :disabled="isDisabled(node)"
       :selected-keys="iSelectedKeysRef"
       :loading-keys="loadingKeysRef"
       :node-padding-left="nodePaddingLeft"
@@ -124,6 +125,11 @@ function triggerLoading(node: TreeNode) {
   }
 }
 
+/** @description 节点是否禁用 */
+function isDisabled(node: TreeNode) {
+  return node.disabled
+}
+
 /** @description 节点是否展开 */
 function isExpanded(node: TreeNode) {
   return expandedKeysRef.value.has(node.key)
@@ -186,6 +192,7 @@ function createTreeNodes(data: TreeOption[], parent?: TreeNode): TreeNode[] {
         children: [],
         level: parentNode ? parentNode.level + 1 : 0,
         isLeaf: treeOption.isLeaf ?? children.length === 0, // 用户提供的isLeaf不为null或undefined时，以isLeaf为准，否则判断有没有children
+        disabled: !!treeOption.disabled,
         rawNode: treeOption
       }
 
