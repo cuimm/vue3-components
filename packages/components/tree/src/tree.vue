@@ -5,6 +5,7 @@
       :key="node.key"
       :node="node"
       :expanded="isExpanded(node)"
+      :loading-keys="loadingKeysRef"
       :node-padding-left="nodePaddingLeft"
       @toggle="toggleExpand"
     >
@@ -15,18 +16,18 @@
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
 import { useNamespace } from '@m2-ui/hooks/use-namespace'
-import { treeProps, type TreeNode, type TreeOption } from './tree'
+import { treeProps, type TreeNode, type TreeOption, type KeyType } from './tree'
 import M2TreeNode from './tree-node.vue'
+
+defineOptions({ name: 'M2Tree' })
 
 const ns = useNamespace('tree')
 
-defineOptions({
-  name: 'M2Tree'
-})
 const props = defineProps(treeProps)
 
 const treeNodesRef = ref<TreeNode[]>([]) // 格式化后的数结构
 const expandedKeysRef = ref(new Set(props.defaultExpandedKeys)) // 默认展开的被拍平后的树结构
+const loadingKeysRef = ref(new Set<KeyType>())
 
 const flattenTreeNodes = computed(formatFlattenTreeNodes) // 拍平的树结构
 
@@ -43,21 +44,46 @@ watch(
 /** @description 切换折叠/展开 */
 function toggleExpand(node: TreeNode) {
   const expandedKeys = expandedKeysRef.value
-  if (expandedKeys.has(node.key)) {
+  if (expandedKeys.has(node.key) && !loadingKeysRef.value.has(node.key)) {
     collpase(node)
   } else {
     expand(node)
   }
 }
 
-/** @description 展开 */
-function expand(node: TreeNode) {
-  expandedKeysRef.value.add(node.key)
-}
-
 /** @description 折叠 */
 function collpase(node: TreeNode) {
   expandedKeysRef.value.delete(node.key)
+}
+
+/** @description 展开 */
+function expand(node: TreeNode) {
+  expandedKeysRef.value.add(node.key)
+
+  triggerLoading(node)
+}
+
+/** 异步加载 */
+function triggerLoading(node: TreeNode) {
+  // 非叶子节点 且 children不是数组 的节点会被视为未加载的节点
+  if (!node.isLeaf && !node.children.length) {
+    const loadingKeys = loadingKeysRef.value
+
+    if (!loadingKeys.has(node.key)) {
+      loadingKeys.add(node.key)
+      const onLoad = props.onLoad
+      if (onLoad) {
+        onLoad(node.rawNode)
+          .then(children => {
+            node.rawNode.children = children // 修改原来的节点
+            node.children = createTreeNodes(children, node) // 更新自定义的node
+          })
+          .finally(() => {
+            loadingKeys.delete(node.key)
+          })
+      }
+    }
+  }
 }
 
 /** @description 节点是否展开 */
@@ -109,7 +135,7 @@ function formatTreeOption(keyField: string, labelField: string, childrenField: s
 }
 
 /** @description 格式化用户传入的data */
-function createTreeNodes(data: TreeOption[]): TreeNode[] {
+function createTreeNodes(data: TreeOption[], parent?: TreeNode): TreeNode[] {
   const formattedTreeOption = formatTreeOption(props.keyField, props.labelField, props.childrenField)
 
   const traversal = (data: TreeOption[], parentNode: TreeNode | null = null) => {
@@ -132,7 +158,7 @@ function createTreeNodes(data: TreeOption[]): TreeNode[] {
     })
   }
 
-  const result: TreeNode[] = traversal(data)
+  const result: TreeNode[] = traversal(data, parent)
   return result
 }
 </script>

@@ -1,5 +1,5 @@
 import { type ExtractPropTypes, PropType } from 'vue'
-import { type TreeNode } from './tree'
+import { type TreeNode, type KeyType } from './tree'
 
 export const treeNodeProps = {
   node: {
@@ -9,6 +9,9 @@ export const treeNodeProps = {
   expanded: {
     type: Boolean,
     default: false
+  },
+  loadingKeys: {
+    type: Object as PropType<Set<KeyType>>
   },
   nodePaddingLeft: {
     type: Number,

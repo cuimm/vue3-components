@@ -1,8 +1,61 @@
-import { TreeOption } from '@m2-ui/components'
+import { ref } from 'vue'
+import { TreeNode, TreeOption } from '@m2-ui/components'
 
 const keyField = 'key2'
 const labelField = 'label2'
 const childrenField = 'children2'
+
+// 1）同步加载
+export const treeData = ref(createTreeData(4)) as unknown as TreeOption[]
+console.log('treeData: ', createTreeData(4))
+
+// 2）异步加载tree
+export const treeAsyncData = ref(createAsyncData())
+
+/** @description 模拟异步加载 */
+function createAsyncData() {
+  return [
+    {
+      [labelField]: nextLabel(),
+      [keyField]: 1,
+      isLeaf: false
+    },
+    {
+      [labelField]: nextLabel(),
+      [keyField]: 2,
+      isLeaf: false
+    }
+  ]
+}
+
+function nextLabel(currentLabel?: string | number | unknown): string {
+  if (!currentLabel) return 'Out of Tao, One is born'
+  if (currentLabel === 'Out of Tao, One is born') return 'Out of One, Two'
+  if (currentLabel === 'Out of One, Two') return 'Out of Two, Three'
+  if (currentLabel === 'Out of Two, Three') {
+    return 'Out of Three, the created universe'
+  }
+  if (currentLabel === 'Out of Three, the created universe') {
+    return 'Out of Tao, One is born'
+  }
+  return ''
+}
+
+/** @description 异步加载load */
+export function handleLoad(node: TreeOption): Promise<TreeOption[]> {
+  console.log('handleLoad: ', node)
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve([
+        {
+          [labelField]: nextLabel(node[labelField]),
+          [keyField]: node[keyField] + nextLabel(node[labelField]),
+          isLeaf: false
+        }
+      ])
+    }, 1000)
+  })
+}
 
 /**
  * 模拟 m2-tree data

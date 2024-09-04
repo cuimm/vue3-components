@@ -1,4 +1,4 @@
-import { type PropType, type ExtractPropTypes } from 'vue'
+import { type PropType, type ExtractPropTypes, Prop } from 'vue'
 
 export type KeyType = string | number
 
@@ -26,6 +26,9 @@ export const treeProps = {
   defaultExpandedKeys: {
     type: Array as PropType<KeyType[]>,
     default: () => []
+  },
+  onLoad: {
+    type: Function as PropType<(node: TreeOption) => Promise<TreeOption[]>>
   },
   nodePaddingLeft: {
     type: Number,

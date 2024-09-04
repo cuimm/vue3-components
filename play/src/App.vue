@@ -1,35 +1,58 @@
 <template>
   <!-- Icon -->
-  <m2-icon
-    :size="20"
-    color="green"
-  >
-    <add-circle />
-  </m2-icon>
-  <m2-icon
-    :size="20"
-    color="red"
-  >
-    <arrow-undo />
-  </m2-icon>
+  <play-panel title="Icon">
+    <m2-icon
+      :size="20"
+      color="green"
+    >
+      <add-circle />
+    </m2-icon>
+    <m2-icon
+      :size="20"
+      color="red"
+    >
+      <arrow-undo />
+    </m2-icon>
+  </play-panel>
 
   <!-- Tree -->
-  <m2-tree
-    :data="treeData"
-    :default-expanded-keys="['40']"
-    :node-padding-left="100"
-    key-field="key2"
-    label-field="label2"
-    children-field="children2"
-  />
+  <play-panel title="Tree">
+    <!-- 同步加载 -->
+    <m2-tree
+      :data="treeData"
+      :default-expanded-keys="['40']"
+      :on-load="handleLoad"
+      :node-padding-left="30"
+      key-field="key2"
+      label-field="label2"
+      children-field="children2"
+    />
+    <!-- 异步加载 -->
+    <m2-tree
+      :data="treeAsyncData"
+      :on-load="handleLoad"
+      :node-padding-left="30"
+      key-field="key2"
+      label-field="label2"
+      children-field="children2"
+    />
+  </play-panel>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { AddCircle, ArrowUndo } from '@vicons/ionicons5'
-import { type TreeOption } from '@m2-ui/components'
-import { createTreeData } from './components/tree'
-
-const treeData = ref(createTreeData(4)) as unknown as TreeOption[]
-console.log('treeData: ', createTreeData(4))
+import PlayPanel from './components/panel'
+import { treeData, treeAsyncData, handleLoad } from './components/tree'
 </script>
+
+<style lang="scss">
+.play-app__panel {
+  margin-bottom: 306x;
+}
+.play-app__panel-title {
+  margin: 0;
+}
+.play-app__panel-container {
+  background-color: antiquewhite;
+}
+</style>
