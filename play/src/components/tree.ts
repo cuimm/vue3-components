@@ -14,6 +14,10 @@ console.log('treeData: ', toRaw(treeData.value))
 // 2）异步加载tree
 export const treeAsyncData = ref(createAsyncData())
 
+// 3）虚拟滚动
+export const treeVirtualData = ref(createTreeData(4, 20)) as unknown as Ref<TreeOption[]>
+// console.log('treeVirtualData: ', toRaw(treeVirtualData.value))
+
 /** @description 模拟异步加载 */
 function createAsyncData() {
   return [
@@ -55,19 +59,25 @@ export function handleLoad(node: TreeOption): Promise<TreeOption[]> {
           isLeaf: false
         }
       ])
-    }, 1000)
+    }, 0)
   })
 }
 
 /**
  * 模拟 m2-tree data
- * @param level 层级数
+ * @param level 嵌套层级数
+ * @param length 每一层数组长度
  * @param parentNode 父级节点
  * @param deepth 深度
  */
-export function createTreeData(level: number, parentNode = null as TreeOption | null, deepth = 0): TreeOption[] {
+export function createTreeData(
+  level: number,
+  length = 2,
+  parentNode = null as TreeOption | null,
+  deepth = 0
+): TreeOption[] {
   if (level === 0) return []
-  const data = new Array(6 - level).fill(0)
+  const data = new Array(length).fill(0)
   return data.map((_, index) => {
     const key = parentNode?.[keyField] ? `${parentNode?.[keyField]}_${level}${index}` : `${level}${index}`
     const node: TreeOption = {
@@ -77,7 +87,7 @@ export function createTreeData(level: number, parentNode = null as TreeOption | 
       deepth: deepth,
       disabled: deepth === 1 ? true : false
     }
-    node[childrenField] = createTreeData(level - 1, node, deepth + 1)
+    node[childrenField] = createTreeData(level - 1, length, node, deepth + 1)
     return node
   })
 }

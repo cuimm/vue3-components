@@ -43,12 +43,26 @@
       <template #default="{ node }"> {{ node.key }} __ {{ node.label }} </template>
     </m2-tree>
   </play-panel>
+
+  <!-- Virtual List -->
+  <play-panel title="虚拟滚动">
+    <m2-tree
+      :data="treeVirtualData"
+      :node-padding-left="30"
+      key-field="key2"
+      label-field="label2"
+      children-field="children2"
+      :virtual-scroll="true"
+      :remain="8"
+      :size="30"
+    />
+  </play-panel>
 </template>
 
 <script setup lang="ts">
 import { AddCircle, ArrowUndo } from '@vicons/ionicons5'
 import PlayPanel from './components/panel'
-import { selectedKeysRef, treeData, treeAsyncData, handleLoad } from './components/tree'
+import { selectedKeysRef, treeData, treeAsyncData, handleLoad, treeVirtualData } from './components/tree'
 </script>
 
 <style lang="scss">

@@ -1,17 +1,40 @@
 <template>
   <div :class="ns.b()">
-    <m2-tree-node
-      v-for="node in flattenTreeNodes"
-      :key="node.key"
-      :node="node"
-      :expanded="isExpanded(node)"
-      :disabled="isDisabled(node)"
-      :selected-keys="iSelectedKeysRef"
-      :loading-keys="loadingKeysRef"
-      :node-padding-left="nodePaddingLeft"
-      @select="handleNodeSelect"
-      @toggle="toggleExpand"
-    />
+    <template v-if="!virtualScroll">
+      <m2-tree-node
+        v-for="node in flattenTreeNodes"
+        :key="node.key"
+        :node="node"
+        :expanded="isExpanded(node)"
+        :disabled="isDisabled(node)"
+        :selected-keys="iSelectedKeysRef"
+        :loading-keys="loadingKeysRef"
+        :node-padding-left="nodePaddingLeft"
+        @select="handleNodeSelect"
+        @toggle="toggleExpand"
+      />
+    </template>
+    <template v-else>
+      <m2-virtual-list
+        :items="flattenTreeNodes"
+        :remain="remain"
+        :size="size"
+      >
+        <template #default="{ node }">
+          <m2-tree-node
+            :key="node.key"
+            :node="node"
+            :expanded="isExpanded(node)"
+            :disabled="isDisabled(node)"
+            :selected-keys="iSelectedKeysRef"
+            :loading-keys="loadingKeysRef"
+            :node-padding-left="nodePaddingLeft"
+            @select="handleNodeSelect"
+            @toggle="toggleExpand"
+          />
+        </template>
+      </m2-virtual-list>
+    </template>
   </div>
 </template>
 
@@ -19,6 +42,7 @@
 import { computed, provide, ref, useSlots, watch } from 'vue'
 import { useNamespace } from '@m2-ui/hooks/use-namespace'
 import M2TreeNode from './tree-node.vue'
+import M2VirtualList from '@m2-ui/components/virtual-list'
 import {
   treeProps,
   treeEmitts,

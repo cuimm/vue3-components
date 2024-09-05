@@ -1,12 +1,4 @@
-import {
-  type PropType,
-  type ExtractPropTypes,
-  SetupContext,
-  SlotsType,
-  type InjectionKey,
-  VNode,
-  defineSlots
-} from 'vue'
+import { type PropType, type ExtractPropTypes, SetupContext, SlotsType, type InjectionKey, VNode } from 'vue'
 
 export type KeyType = string | number
 
@@ -67,6 +59,18 @@ export const treeProps = {
   childrenField: {
     type: String,
     default: 'children'
+  },
+  virtualScroll: {
+    type: Boolean,
+    default: false
+  },
+  remain: {
+    type: Number,
+    default: 8
+  },
+  size: {
+    type: Number,
+    default: 36
   }
 } as const
 export type TreeProps = Partial<ExtractPropTypes<typeof treeProps>>
