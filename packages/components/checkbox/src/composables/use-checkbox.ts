@@ -4,13 +4,17 @@ import { useCheckboxStatus } from './use-checkbox-status'
 import { useCheckboxEvent } from './use-checkbox-event'
 
 export const useCheckbox = (props: CheckboxProps) => {
-  const { isIndeterminate, isFocused, isDisabled, isChecked } = useCheckboxStatus(props)
-  const { model } = useCheckboxModel(props)
+  const { model, isLimitExceeded } = useCheckboxModel(props)
 
-  const { handleChange } = useCheckboxEvent(props, { isIndeterminate })
+  const { isIndeterminate, isFocused, isDisabled, isChecked, actualValue } = useCheckboxStatus(props, {
+    model
+  })
+
+  const { handleChange } = useCheckboxEvent(props, { isIndeterminate, isLimitExceeded })
 
   return {
     model,
+    actualValue,
     isIndeterminate,
     isFocused,
     isDisabled,

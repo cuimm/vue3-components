@@ -89,7 +89,36 @@
     >
       禁用
     </m2-checkbox>
-    <m2-checkbox-group />
+
+    {{ checkList }}
+    <m2-checkbox-group
+      v-model="checkList"
+      :min="1"
+      :max="2"
+      @change="handleCheckboxGroupChange"
+    >
+      <m2-checkbox
+        label="Option A"
+        value="A"
+      />
+      <m2-checkbox
+        label="Option B"
+        value="B"
+      />
+      <m2-checkbox
+        label="Option C"
+        value="C"
+      />
+      <m2-checkbox
+        label="Option D"
+        value="D"
+      />
+      <m2-checkbox
+        label="Option E"
+        value="E"
+        :disabled="true"
+      />
+    </m2-checkbox-group>
   </play-panel>
 </template>
 
@@ -97,7 +126,14 @@
 import { AddCircle, ArrowUndo } from '@vicons/ionicons5'
 import PlayPanel from './components/panel'
 import { selectedKeysRef, treeData, treeAsyncData, handleLoad, treeVirtualData } from './components/tree'
-import { checked1, checked2, checked3, indeterminate } from './components/checkbox'
+import {
+  checked1,
+  checked2,
+  checked3,
+  checkList,
+  indeterminate,
+  handleCheckboxGroupChange
+} from './components/checkbox'
 </script>
 
 <style lang="scss">

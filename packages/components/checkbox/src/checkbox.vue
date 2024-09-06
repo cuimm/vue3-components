@@ -18,6 +18,7 @@
         v-model="model"
         type="checkbox"
         :disabled="isDisabled"
+        :value="actualValue"
         :class="ns.e('original')"
         @focus="isFocused = true"
         @blur="isFocused = false"
@@ -43,7 +44,7 @@ defineOptions({ name: 'M2Checkbox' })
 const ns = useNamespace('checkbox')
 const props = defineProps(checkboxProps)
 
-const { model, isFocused, isIndeterminate, isDisabled, isChecked, handleChange } = useCheckbox(props)
+const { model, isFocused, isIndeterminate, isDisabled, isChecked, actualValue, handleChange } = useCheckbox(props)
 
 /** @description 组件最外层class */
 const compClass = computed(() => {

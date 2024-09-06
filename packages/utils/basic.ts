@@ -7,6 +7,8 @@ export const toTypeString = (val: unknown) => objectToString.call(val)
 export const hasOwn = (val: object, key: string): key is keyof typeof val =>
   Object.prototype.hasOwnProperty.call(val, key)
 
+export const isUndefined = (val: unknown): val is undefined => val === undefined
+
 export const isSymbol = (val: unknown): val is symbol => typeof val === 'symbol'
 
 export const isString = (val: unknown): val is string => typeof val === 'string'

@@ -31,6 +31,33 @@
 
     @include when(disabled) {
       cursor: not-allowed;
+
+      &.is-checked {
+        .#{$namespace}-checkbox__inner {
+          background-color: $m2-border-color-extra-light;
+          border-color: $m2-border-color;
+
+          &::after {
+            border-color: $m2-color-disabled;
+          }
+        }
+      }
+
+      & + .#{$namespace}-checkbox__label {
+        color: $m2-color-disabled;
+        cursor: not-allowed;
+      }
+
+      .#{$namespace}-checkbox__inner {
+        background-color: $m2-fill-color-light;
+        border-color: $m2-border-color;
+        cursor: not-allowed;
+
+        &::after {
+          cursor: not-allowed;
+          border-color: $m2-color-disabled;
+        }
+      }
     }
 
     @include when('checked') {
