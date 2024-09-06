@@ -1,0 +1,6 @@
+{
+  "name": "@m2-ui/constants",
+  "private": true,
+  "main": "index.js",
+  "license": "ISC"
+}

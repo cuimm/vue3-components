@@ -1,7 +1,8 @@
 import { computed, getCurrentInstance, ref, inject } from 'vue'
+import { UPDATE_MODEL_EVENT } from '@m2-ui/constants'
+import { isArray, isUndefined } from '@m2-ui/utils/basic'
 import { type CheckboxEmits, type CheckboxProps, type CheckboxValueType } from '../checkbox'
 import { checkboxGroupInjectKey } from '../checkbox-group'
-import { isArray, isUndefined } from '@m2-ui/utils/basic'
 
 export const useCheckboxModel = (props: CheckboxProps) => {
   const checkboxGroup = inject(checkboxGroupInjectKey, undefined) // 注入checkbox-group provide的值
@@ -32,7 +33,7 @@ export const useCheckboxModel = (props: CheckboxProps) => {
         }
       } else {
         // 单独的checkbox
-        emit('update:modelValue', val)
+        emit(UPDATE_MODEL_EVENT, val)
         modelRef.value = val
       }
     }

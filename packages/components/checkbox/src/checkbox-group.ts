@@ -1,4 +1,5 @@
 import type { ExtractPropTypes, InjectionKey, PropType, SetupContext, ToRefs, WritableComputedRef } from 'vue'
+import { UPDATE_MODEL_EVENT } from '@m2-ui/constants'
 import { isArray } from '@m2-ui/utils/basic'
 import { type CheckboxValueType } from './checkbox'
 
@@ -29,7 +30,7 @@ export type CheckboxGroupPorps = ExtractPropTypes<typeof checkboxGroupProps>
 
 /** @description checkbox-group emits */
 export const checkboxGroupEmits = {
-  'update:modelValue': (val: CheckboxGroupValueType) => isArray(val),
+  [UPDATE_MODEL_EVENT]: (val: CheckboxGroupValueType) => isArray(val),
   change: (val: CheckboxGroupValueType) => isArray(val)
 }
 

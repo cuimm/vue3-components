@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@m2-ui/components": "workspace:*",
+    "@m2-ui/constants": "workspace:*",
     "@m2-ui/hooks": "workspace:*",
     "@m2-ui/theme-chalk": "workspace:*",
     "@m2-ui/utils": "workspace:*",

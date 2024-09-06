@@ -9,6 +9,7 @@
 
 <script lang="ts" setup>
 import { computed, nextTick, provide, toRefs } from 'vue'
+import { UPDATE_MODEL_EVENT } from '@m2-ui/constants'
 import { useNamespace } from '@m2-ui/hooks/use-namespace'
 import {
   checkboxGroupEmits,
@@ -32,7 +33,7 @@ const modelValue = computed<CheckboxGroupValueType>({
 })
 
 async function changeEvent(val: CheckboxGroupValueType) {
-  emit('update:modelValue', val)
+  emit(UPDATE_MODEL_EVENT, val)
   await nextTick()
   emit('change', val)
 }
