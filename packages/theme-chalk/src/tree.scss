@@ -14,7 +14,7 @@
   cursor: pointer;
 
   &:hover {
-    background-color: $m2-tree-node-background-color;
+    background-color: $m2-background-color-tree-node;
   }
 
   &.is-disabled {

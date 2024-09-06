@@ -1,1 +1,36 @@
-$m2-tree-node-background-color: antiquewhite !default;
+$m2-white: #ffffff !default;
+
+$m2-color-primary: #409eff !default;
+$m2-color-primary-light-3: #79bbff !default;
+$m2-color-primary-light-5: #a0cfff !default;
+$m2-color-primary-light-7: #c6e2ff !default;
+$m2-color-primary-light-8: #d9ecff !default;
+$m2-color-primary-light-9: #ecf5ff !default;
+
+$m2-text-color-primary: #303133 !default;
+$m2-text-color-regular: #606266 !default;
+$m2-text-color-secondary: #909399 !default;
+$m2-text-color-placeholder: #a8abb2 !default;
+$m2-text-color-disabled: #c0c4cc !default;
+
+$m2-border-color: #dcdfe6 !default;
+$m2-border-color-light: #e4e7ed !default;
+$m2-border-color-lighter: #ebeef5 !default;
+$m2-border-color-extra-light: #f2f6fc !default;
+$m2-border-color-dark: #d4d7de !default;
+$m2-border-color-darker: #cdd0d6 !default;
+
+$m2-background-color-white: $m2-white !default;
+$m2-background-color-tree-node: antiquewhite !default;
+
+$m2-border: 1px solid $m2-border-color;
+$m2-border-radius-base: 4px !default;
+$m2-border-radius-small: 2px !default;
+$m2-border-radius-round: 20px !default;
+$m2-border-radius-circle: 100% !default;
+
+$m2-border-checkbox: $m2-border;
+$m2-checkbox-input-height: 14px;
+$m2-checkbox-input-width: 14px;
+
+$m2-z-index-normal: 1 !default;
