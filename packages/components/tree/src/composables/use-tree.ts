@@ -9,7 +9,7 @@ export const useTree = (props: TreeProps) => {
   const expandedKeysRef = ref(new Set(props.defaultExpandedKeys)) // 默认展开的被拍平后的树结构
 
   const { flattenTreeNodes, createTreeNodes } = useTreeNodes(props, { expandedKeysRef })
-  const { isChecked, isIndeterminate, isDisabled, toggleCheck } = useTreeCheckbox({ flattenTreeNodes })
+  const { isChecked, isIndeterminate, isDisabled, toggleCheck } = useTreeCheckbox(props, { flattenTreeNodes })
   const { selectedKeysRef, handleNodeSelect } = useTreeSelect(props)
   const { loadingKeysRef, isExpanded, toggleExpand } = useTreeToggle(props, { expandedKeysRef, createTreeNodes })
 

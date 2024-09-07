@@ -1,23 +1,58 @@
-import { ref } from 'vue'
-import type { KeyType, TreeNode } from '../tree'
+import { getCurrentInstance, ref, watch } from 'vue'
+import type { KeyType, TreeEmitts, TreeNode, TreeProps } from '../tree'
 import type { TreeNodes } from './use-tree-nodes'
 
-export const useTreeCheckbox = ({ flattenTreeNodes }: Pick<TreeNodes, 'flattenTreeNodes'>) => {
+export const useTreeCheckbox = (props: TreeProps, { flattenTreeNodes }: Pick<TreeNodes, 'flattenTreeNodes'>) => {
   const checkedKeysRef = ref(new Set<KeyType>()) // 选中的节点集合
   const indeterminateKeysRefs = ref(new Set<KeyType>()) // 半选的节点集合
 
+  const { emit }: { emit: TreeEmitts } = getCurrentInstance()!
+
+  watch(
+    () => {
+      return {
+        len: flattenTreeNodes.value?.length,
+        checkedKeys: props.checkedKeys
+      }
+    },
+    ({ checkedKeys }) => {
+      checkedKeys?.forEach(key => {
+        const node = findNodeByKey(key)
+        if (node) {
+          toggleCheck(node, true)
+        }
+      })
+    },
+    {
+      immediate: true,
+      deep: true
+    }
+  )
+
+  watch(
+    () => checkedKeysRef.value,
+    keys => {
+      emit('update:checkedKeys', [...keys])
+    },
+    {
+      deep: true,
+      immediate: true
+    }
+  )
+
   /** @description 通过key查找节点 */
-  const findNodeByKey = (key: KeyType) => {
+  function findNodeByKey(key: KeyType) {
     return flattenTreeNodes?.value?.find(node => node.key === key)
   }
 
   /** @description 向下递归子节点，查看checkbox选中状态 */
-  const toggleCheckForChildren = (node: TreeNode, isChecked: boolean) => {
+  function toggleCheckForChildren(node: TreeNode, isChecked: boolean) {
     if (!node) return
     if (isChecked) {
       indeterminateKeysRefs.value.delete(node.key)
     }
     checkedKeysRef.value[isChecked ? 'add' : 'delete'](node.key)
+
     const children = node.children
     if (children) {
       children.forEach(child => {
@@ -29,7 +64,7 @@ export const useTreeCheckbox = ({ flattenTreeNodes }: Pick<TreeNodes, 'flattenTr
   }
 
   /** @description 向上递归父节点，查看checkbox选中状态 */
-  const toggleCheckForParent = (node: TreeNode) => {
+  function toggleCheckForParent(node: TreeNode) {
     if (!node) return
     if (node.parentKey) {
       const parentNode = findNodeByKey(node.parentKey)
@@ -58,6 +93,9 @@ export const useTreeCheckbox = ({ flattenTreeNodes }: Pick<TreeNodes, 'flattenTr
         } else if (hasChecked) {
           checkedKeys.delete(parentKey)
           indeterminateKeys.add(parentKey)
+        } else {
+          checkedKeys.delete(parentKey)
+          indeterminateKeys.delete(parentKey)
         }
 
         toggleCheckForParent(parentNode) // 向上递归父节点
@@ -66,13 +104,13 @@ export const useTreeCheckbox = ({ flattenTreeNodes }: Pick<TreeNodes, 'flattenTr
   }
 
   /** @description 切换checkbox选择状态 */
-  const toggleCheck = (node: TreeNode, isChecked: boolean) => {
+  function toggleCheck(node: TreeNode, isChecked: boolean) {
     toggleCheckForChildren(node, isChecked)
     toggleCheckForParent(node)
   }
 
   /** @description 节点是否禁用 */
-  const isDisabled = (node: TreeNode) => {
+  function isDisabled(node: TreeNode) {
     if (!node) return
     if (node.disabled) {
       return true
@@ -92,12 +130,12 @@ export const useTreeCheckbox = ({ flattenTreeNodes }: Pick<TreeNodes, 'flattenTr
   }
 
   /** @description 复选框是否选中 */
-  const isChecked = (node: TreeNode) => {
+  function isChecked(node: TreeNode) {
     return checkedKeysRef.value.has(node.key)
   }
 
   /** @description 复选框是否半选 */
-  const isIndeterminate = (node: TreeNode) => {
+  function isIndeterminate(node: TreeNode) {
     return indeterminateKeysRefs.value.has(node.key)
   }
 

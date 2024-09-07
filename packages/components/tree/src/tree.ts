@@ -78,7 +78,11 @@ export const treeProps = {
     default: false
   },
   defaultCheckedKeys: {
-    type: Array,
+    type: Array as PropType<KeyType[]>,
+    default: () => []
+  },
+  checkedKeys: {
+    type: Array as PropType<KeyType[]>,
     default: () => []
   }
 } as const
@@ -86,7 +90,8 @@ export type TreeProps = Partial<ExtractPropTypes<typeof treeProps>>
 
 /** @description M2Tree Emit */
 export const treeEmitts = {
-  'update:selectedKeys': (keys: KeyType[]) => keys
+  'update:selectedKeys': (keys: KeyType[]) => keys,
+  'update:checkedKeys': (keys: KeyType[]) => keys
 }
 
 /** @description M2Tree Slot */

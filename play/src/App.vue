@@ -18,8 +18,10 @@
   <!-- Tree -->
   <play-panel title="Tree同步加载">
     {{ selectedKeysRef }}
+    {{ checkedKeysRef }}
     <m2-tree
       v-model:selected-keys="selectedKeysRef"
+      v-model:checked-keys="checkedKeysRef"
       :data="treeData"
       :selectable="false"
       :multiple="true"
@@ -126,7 +128,14 @@
 <script setup lang="ts">
 import { AddCircle, ArrowUndo } from '@vicons/ionicons5'
 import PlayPanel from './components/panel'
-import { selectedKeysRef, treeData, treeAsyncData, handleLoad, treeVirtualData } from './components/tree'
+import {
+  selectedKeysRef,
+  checkedKeysRef,
+  treeData,
+  treeAsyncData,
+  handleLoad,
+  treeVirtualData
+} from './components/tree'
 import {
   checked1,
   checked2,
