@@ -6,6 +6,7 @@ const labelField = 'label2'
 const childrenField = 'children2'
 
 export const selectedKeysRef = ref<KeyType[]>(['40'])
+export const checkedKeysRef = ref<KeyType[]>(['41'])
 
 // 1）同步加载
 export const treeData = ref(createTreeData(4)) as unknown as Ref<TreeOption[]>
