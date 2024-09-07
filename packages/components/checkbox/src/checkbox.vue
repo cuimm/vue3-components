@@ -11,7 +11,8 @@
         :class="ns.e('original')"
         @focus="isFocused = true"
         @blur="isFocused = false"
-        @change="handleChange"
+        @change.stop="handleChange"
+        @click.stop
       />
       <input
         v-else
@@ -22,7 +23,8 @@
         :class="ns.e('original')"
         @focus="isFocused = true"
         @blur="isFocused = false"
-        @change="handleChange"
+        @change.stop="handleChange"
+        @click.stop
       />
       <span :class="ns.e('inner')"></span>
     </span>

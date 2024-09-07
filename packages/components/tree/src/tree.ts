@@ -17,6 +17,7 @@ export interface TreeNode extends Required<TreeOption> {
   level: number
   children: TreeNode[]
   rawNode: TreeOption
+  parentKey: KeyType | undefined
 }
 
 /** @description M2Tree Props */
@@ -71,6 +72,14 @@ export const treeProps = {
   size: {
     type: Number,
     default: 36
+  },
+  showCheckbox: {
+    type: Boolean,
+    default: false
+  },
+  defaultCheckedKeys: {
+    type: Array,
+    default: () => []
   }
 } as const
 export type TreeProps = Partial<ExtractPropTypes<typeof treeProps>>

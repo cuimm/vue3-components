@@ -85,7 +85,7 @@ export function createTreeData(
       [labelField]: `${deepth + 1}-${index}`,
       [childrenField]: [],
       deepth: deepth,
-      disabled: deepth === 1 ? true : false
+      disabled: deepth === 3 ? true : false
     }
     node[childrenField] = createTreeData(level - 1, length, node, deepth + 1)
     return node

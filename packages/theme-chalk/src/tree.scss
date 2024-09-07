@@ -28,7 +28,13 @@
 
   @include e(content) {
     display: flex;
+    align-items: center;
+    justify-items: center;
     width: 100%;
+
+    .#{$namespace}-checkbox {
+      margin-left: 5px;
+    }
   }
 
   @include e(expand-icon) {

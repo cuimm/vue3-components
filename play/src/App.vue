@@ -21,9 +21,10 @@
     <m2-tree
       v-model:selected-keys="selectedKeysRef"
       :data="treeData"
-      selectable
+      :selectable="false"
       :multiple="true"
       :node-padding-left="30"
+      :show-checkbox="true"
       key-field="key2"
       label-field="label2"
       children-field="children2"

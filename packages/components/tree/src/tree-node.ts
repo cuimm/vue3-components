@@ -24,6 +24,18 @@ export const treeNodeProps = {
   nodePaddingLeft: {
     type: Number,
     default: 16
+  },
+  showCheckbox: {
+    type: Boolean,
+    default: false
+  },
+  isChecked: {
+    type: Boolean,
+    default: false
+  },
+  isIndeterminate: {
+    type: Boolean,
+    default: false
   }
 } as const
 
@@ -31,7 +43,8 @@ export type TreeNodeProps = Partial<ExtractPropTypes<typeof treeNodeProps>>
 
 export const treeNodeEmitts = {
   toggle: (node: TreeNode) => node,
-  select: (node: TreeNode) => node
+  select: (node: TreeNode) => node,
+  check: (node: TreeNode, isChecked: boolean) => typeof isChecked === 'boolean'
 }
 
 export type TreeNodeEmitts = typeof treeNodeEmitts

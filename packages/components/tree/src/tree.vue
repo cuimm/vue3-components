@@ -10,8 +10,12 @@
         :selected-keys="iSelectedKeysRef"
         :loading-keys="loadingKeysRef"
         :node-padding-left="nodePaddingLeft"
+        :show-checkbox="showCheckbox"
+        :is-checked="isChecked(node)"
+        :is-indeterminate="isIndeterminate(node)"
         @select="handleNodeSelect"
         @toggle="toggleExpand"
+        @check="toggleCheck"
       />
     </template>
     <template v-else>
@@ -29,8 +33,12 @@
             :selected-keys="iSelectedKeysRef"
             :loading-keys="loadingKeysRef"
             :node-padding-left="nodePaddingLeft"
+            :show-checkbox="showCheckbox"
+            :is-checked="isChecked(node)"
+            :is-indeterminate="isIndeterminate(node)"
             @select="handleNodeSelect"
             @toggle="toggleExpand"
+            @check="toggleCheck"
           />
         </template>
       </m2-virtual-list>
@@ -67,7 +75,9 @@ const emit = defineEmits(treeEmitts)
 const iSelectedKeysRef = ref<KeyType[]>([])
 const treeNodesRef = ref<TreeNode[]>([]) // 格式化后的数结构
 const expandedKeysRef = ref(new Set(props.defaultExpandedKeys)) // 默认展开的被拍平后的树结构
-const loadingKeysRef = ref(new Set<KeyType>())
+const loadingKeysRef = ref(new Set<KeyType>()) // 正在loading的node节点集合
+const checkedKeysRef = ref(new Set<KeyType>()) // 选中的节点集合
+const indeterminateKeysRefs = ref(new Set<KeyType>()) // 半选的节点集合
 
 const flattenTreeNodes = computed(formatFlattenTreeNodes) // 拍平的树结构
 
@@ -137,7 +147,7 @@ function expand(node: TreeNode) {
   triggerLoading(node)
 }
 
-/** 异步加载 */
+/** @description 异步加载 */
 function triggerLoading(node: TreeNode) {
   // 非叶子节点 且 children不是数组 的节点会被视为未加载的节点
   if (!node.isLeaf && !node.children.length) {
@@ -160,9 +170,99 @@ function triggerLoading(node: TreeNode) {
   }
 }
 
+/** @description 通过key查找节点 */
+function findNodeByKey(key: KeyType) {
+  return flattenTreeNodes.value?.find(node => node.key === key)
+}
+
+/** @description 向下递归子节点，查看checkbox选中状态 */
+function toggleCheckForChildren(node: TreeNode, isChecked: boolean) {
+  if (!node) return
+  if (isChecked) {
+    indeterminateKeysRefs.value.delete(node.key)
+  }
+  checkedKeysRef.value[isChecked ? 'add' : 'delete'](node.key)
+  const children = node.children
+  if (children) {
+    children.forEach(child => {
+      if (!child.disabled) {
+        toggleCheckForChildren(child, isChecked) // 向下递归子节点
+      }
+    })
+  }
+}
+
+/** @description 向上递归父节点，查看checkbox选中状态 */
+function toggleCheckForParent(node: TreeNode) {
+  if (!node) return
+  if (node.parentKey) {
+    const parentNode = findNodeByKey(node.parentKey)
+    if (parentNode) {
+      const parentKey = parentNode.key
+      const checkedKeys = checkedKeysRef.value
+      const indeterminateKeys = indeterminateKeysRefs.value
+
+      let allChecked = true
+      let hasChecked = false
+      const children = parentNode.children
+      for (let child of children) {
+        if (checkedKeys.has(child.key)) {
+          hasChecked = true
+        } else if (indeterminateKeys.has(child.key)) {
+          allChecked = false
+          hasChecked = true
+        } else {
+          allChecked = false
+        }
+      }
+
+      if (allChecked) {
+        checkedKeys.add(parentKey)
+        indeterminateKeys.delete(parentKey)
+      } else if (hasChecked) {
+        checkedKeys.delete(parentKey)
+        indeterminateKeys.add(parentKey)
+      }
+
+      toggleCheckForParent(parentNode) // 向上递归父节点
+    }
+  }
+}
+
+/** @description 切换checkbox选择状态 */
+function toggleCheck(node: TreeNode, isChecked: boolean) {
+  toggleCheckForChildren(node, isChecked)
+  toggleCheckForParent(node)
+}
+
+/** @description 复选框是否选中 */
+function isChecked(node: TreeNode) {
+  return checkedKeysRef.value.has(node.key)
+}
+
+/** @description 复选框是否半选 */
+function isIndeterminate(node: TreeNode) {
+  return indeterminateKeysRefs.value.has(node.key)
+}
+
 /** @description 节点是否禁用 */
 function isDisabled(node: TreeNode) {
-  return node.disabled
+  if (!node) return
+  if (node.disabled) {
+    return true
+  }
+  if (node.parentKey) {
+    const parentNode = findNodeByKey(node.parentKey)
+    if (parentNode) {
+      if (parentNode.disabled) {
+        return true
+      } else {
+        return isDisabled(parentNode)
+      }
+    }
+  } else {
+    return false
+  }
 }
 
 /** @description 节点是否展开 */
@@ -228,7 +328,8 @@ function createTreeNodes(data: TreeOption[], parent?: TreeNode): TreeNode[] {
         level: parentNode ? parentNode.level + 1 : 0,
         isLeaf: treeOption.isLeaf ?? children.length === 0, // 用户提供的isLeaf不为null或undefined时，以isLeaf为准，否则判断有没有children
         disabled: !!treeOption.disabled,
-        rawNode: treeOption
+        rawNode: treeOption,
+        parentKey: parentNode?.key
       }
 
       if (children.length) {

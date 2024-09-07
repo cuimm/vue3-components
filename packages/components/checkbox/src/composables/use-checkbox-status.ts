@@ -5,7 +5,7 @@ import type { CheckboxProps } from '../checkbox'
 import type { CheckboxModel } from './use-checkbox-model'
 
 export const useCheckboxStatus = (props: CheckboxProps, { model }: Pick<CheckboxModel, 'model'>) => {
-  const checkboxGroup = inject(checkboxGroupInjectKey)
+  const checkboxGroup = inject(checkboxGroupInjectKey, undefined)
 
   /** @description 是否获取焦点 */
   const isFocused = ref(false)

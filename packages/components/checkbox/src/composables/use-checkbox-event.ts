@@ -20,7 +20,7 @@ export const useCheckboxEvent = (
     isIndeterminate.value = false
 
     const target = e.target as HTMLInputElement
-    emit('change', getLabeledValue(target.checked))
+    emit('change', getLabeledValue(target.checked), e)
   }
 
   return {

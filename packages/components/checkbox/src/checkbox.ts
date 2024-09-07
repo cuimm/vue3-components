@@ -43,7 +43,7 @@ export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>
 /** @description Checkbox emit 事件 */
 export const checkboxEmits = {
   [UPDATE_MODEL_EVENT]: (val: CheckboxValueType) => isString(val) || isNumber(val) || isBoolean(val),
-  change: (val: CheckboxValueType) => isString(val) || isNumber(val) || isBoolean(val)
+  change: (val: CheckboxValueType, event: Event) => isString(val) || isNumber(val) || isBoolean(val) || !!event
 }
 /** @description Checkbox SetupContext */
 export type CheckboxSetupContext = SetupContext<typeof checkboxEmits>

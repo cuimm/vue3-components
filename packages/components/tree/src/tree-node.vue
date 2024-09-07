@@ -14,6 +14,13 @@
           <m2-loading v-else></m2-loading>
         </m2-icon>
       </span>
+      <m2-checkbox
+        v-if="showCheckbox"
+        :model-value="isChecked"
+        :disabled="disabled"
+        :indeterminate="isIndeterminate"
+        @change="handleCheckboxChange"
+      />
       <div
         :class="ns.e('label')"
         @click="handleLabelClick"
@@ -44,6 +51,11 @@ const isSelected = computed(() => {
 const loading = computed(() => {
   return props.loadingKeys?.has(props.node.key)
 })
+
+/** @description 级联选择 */
+const handleCheckboxChange = (val: any) => {
+  emit('check', props.node, val)
+}
 
 /** @description 选中 */
 const handleLabelClick = () => {
