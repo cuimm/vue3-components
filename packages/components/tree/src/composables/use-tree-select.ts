@@ -1,5 +1,5 @@
 import { getCurrentInstance, ref, watch } from 'vue'
-import { TreeNode, TreeProps, KeyType, TreeEmitts } from '../tree'
+import type { TreeNode, TreeProps, KeyType, TreeEmitts } from '../tree'
 
 export const useTreeSelect = (props: TreeProps) => {
   const selectedKeysRef = ref<KeyType[]>([])

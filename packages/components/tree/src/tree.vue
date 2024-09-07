@@ -50,7 +50,7 @@
 import { provide, useSlots } from 'vue'
 import { useNamespace } from '@m2-ui/hooks/use-namespace'
 import M2VirtualList from '@m2-ui/components/virtual-list'
-import { treeProps, treeInjectKey, type TreeNode, type TreeSlots } from './tree'
+import { treeProps, treeInjectKey, type TreeSlots } from './tree'
 import M2TreeNode from './tree-node.vue'
 import { useTree } from './composables'
 
@@ -66,64 +66,14 @@ const props = defineProps(treeProps)
 
 const {
   selectedKeysRef,
-  expandedKeysRef,
   loadingKeysRef,
   isChecked,
   isIndeterminate,
   isDisabled,
   flattenTreeNodes,
-  createTreeNodes,
   toggleCheck,
-  handleNodeSelect
+  handleNodeSelect,
+  isExpanded,
+  toggleExpand
 } = useTree(props)
-
-/** @description 切换折叠/展开 */
-function toggleExpand(node: TreeNode) {
-  const expandedKeys = expandedKeysRef.value
-  if (expandedKeys.has(node.key) && !loadingKeysRef.value.has(node.key)) {
-    collpase(node)
-  } else {
-    expand(node)
-  }
-}
-
-/** @description 折叠 */
-function collpase(node: TreeNode) {
-  expandedKeysRef.value.delete(node.key)
-}
-
-/** @description 展开 */
-function expand(node: TreeNode) {
-  expandedKeysRef.value.add(node.key)
-
-  triggerLoading(node)
-}
-
-/** @description 异步加载 */
-function triggerLoading(node: TreeNode) {
-  // 非叶子节点 且 children不是数组 的节点会被视为未加载的节点
-  if (!node.isLeaf && !node.children.length) {
-    const loadingKeys = loadingKeysRef.value
-
-    if (!loadingKeys.has(node.key)) {
-      loadingKeys.add(node.key)
-      const onLoad = props.onLoad
-      if (onLoad) {
-        onLoad(node.rawNode)
-          .then(children => {
-            node.rawNode.children = children // 修改原来的节点
-            node.children = createTreeNodes(children, node) // 更新自定义的node
-          })
-          .finally(() => {
-            loadingKeys.delete(node.key)
-          })
-      }
-    }
-  }
-}
-
-/** @description 节点是否展开 */
-function isExpanded(node: TreeNode) {
-  return expandedKeysRef.value.has(node.key)
-}
 </script>

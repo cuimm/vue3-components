@@ -8,6 +8,8 @@ export const useTreeNodes = (
 ) => {
   const treeNodesRef = ref<TreeNode[]>([]) // 格式化后的数结构
 
+  const flattenTreeNodes = computed(formatFlattenTreeNodes) // 拍平的树结构
+
   watch(
     () => props.data,
     (data: TreeOption[] | undefined) => {
@@ -21,7 +23,7 @@ export const useTreeNodes = (
   )
 
   /** @description 拍平要展开的树结构【深度遍历】 */
-  const formatFlattenTreeNodes = () => {
+  function formatFlattenTreeNodes() {
     const flattedNodes: TreeNode[] = [] // 要拍平的节点
     const treeNodes = treeNodesRef.value // 格式化后的所有的树节点
     const expandedKeys = expandedKeysRef.value // 要展开的keys
@@ -49,7 +51,7 @@ export const useTreeNodes = (
   }
 
   /** @description 格式化用户传入的data option */
-  const formatTreeOption = (keyField = 'key', labelField = 'label', childrenField = 'children') => {
+  function formatTreeOption(keyField = 'key', labelField = 'label', childrenField = 'children') {
     return {
       getKey(treeOption: TreeOption) {
         return treeOption[keyField] as string
@@ -64,7 +66,7 @@ export const useTreeNodes = (
   }
 
   /** @description 格式化用户传入的data */
-  const createTreeNodes = (data: TreeOption[], parent?: TreeNode): TreeNode[] => {
+  function createTreeNodes(data: TreeOption[], parent?: TreeNode): TreeNode[] {
     const formattedTreeOption = formatTreeOption(props.keyField, props.labelField, props.childrenField)
 
     const traversal = (data: TreeOption[], parentNode: TreeNode | null = null) => {
@@ -95,7 +97,7 @@ export const useTreeNodes = (
 
   return {
     createTreeNodes,
-    flattenTreeNodes: computed(formatFlattenTreeNodes) // 拍平的树结构,
+    flattenTreeNodes
   }
 }
 

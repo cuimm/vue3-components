@@ -1,12 +1,19 @@
 import { ref } from 'vue'
-import { TreeNode, TreeProps } from '../tree'
+import type { Ref, UnwrapRef } from 'vue'
+import type { KeyType, TreeNode, TreeProps } from '../tree'
+import { TreeNodes } from './use-tree-nodes'
 
-export const useTreeToggle = (props: TreeProps) => {
-  const expandedKeysRef = ref(new Set(props.defaultExpandedKeys)) // 默认展开的被拍平后的树结构
+export const useTreeToggle = (
+  props: TreeProps,
+  {
+    expandedKeysRef,
+    createTreeNodes
+  }: { expandedKeysRef: Ref<UnwrapRef<Set<KeyType>>> } & Pick<TreeNodes, 'createTreeNodes'>
+) => {
   const loadingKeysRef = ref(new Set<KeyType>()) // 正在loading的node节点集合
 
   /** @description 切换折叠/展开 */
-  const toggleExpand = (node: TreeNode) => {
+  function toggleExpand(node: TreeNode) {
     const expandedKeys = expandedKeysRef.value
     if (expandedKeys.has(node.key) && !loadingKeysRef.value.has(node.key)) {
       collpase(node)
@@ -16,19 +23,19 @@ export const useTreeToggle = (props: TreeProps) => {
   }
 
   /** @description 折叠 */
-  const collpase = (node: TreeNode) => {
+  function collpase(node: TreeNode) {
     expandedKeysRef.value.delete(node.key)
   }
 
   /** @description 展开 */
-  const expand = (node: TreeNode) => {
+  function expand(node: TreeNode) {
     expandedKeysRef.value.add(node.key)
 
     triggerLoading(node)
   }
 
   /** @description 异步加载 */
-  const triggerLoading = (node: TreeNode) => {
+  function triggerLoading(node: TreeNode) {
     // 非叶子节点 且 children不是数组 的节点会被视为未加载的节点
     if (!node.isLeaf && !node.children.length) {
       const loadingKeys = loadingKeysRef.value
@@ -51,13 +58,15 @@ export const useTreeToggle = (props: TreeProps) => {
   }
 
   /** @description 节点是否展开 */
-  const isExpanded = (node: TreeNode) => {
+  function isExpanded(node: TreeNode) {
     return expandedKeysRef.value.has(node.key)
   }
 
   return {
+    expandedKeysRef,
+    loadingKeysRef,
     isExpanded,
-    expandedKeysRef
+    toggleExpand
   }
 }
 

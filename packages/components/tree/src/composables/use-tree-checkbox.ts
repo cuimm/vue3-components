@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import type { KeyType, TreeNode } from '../tree'
-import { TreeNodes } from './use-tree-nodes'
+import type { TreeNodes } from './use-tree-nodes'
 
 export const useTreeCheckbox = ({ flattenTreeNodes }: Pick<TreeNodes, 'flattenTreeNodes'>) => {
   const checkedKeysRef = ref(new Set<KeyType>()) // 选中的节点集合
