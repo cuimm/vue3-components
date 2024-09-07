@@ -88,7 +88,6 @@ export type TreeProps = Partial<ExtractPropTypes<typeof treeProps>>
 export const treeEmitts = {
   'update:selectedKeys': (keys: KeyType[]) => keys
 }
-export type TreeEmitts = typeof treeEmitts
 
 /** @description M2Tree Slot */
 export type TreeSlots = {
@@ -96,12 +95,14 @@ export type TreeSlots = {
 }
 
 /** @description M2Tree SetupContext */
-export type TreeSetupContext = SetupContext<TreeEmitts, SlotsType<TreeSlots>>
+export type TreeSetupContext = SetupContext<typeof treeEmitts, SlotsType<TreeSlots>>
 
 export interface TreeContext {
   slots: TreeSetupContext['slots']
   // emits: TreeSetupContext['emit']
 }
+
+export type TreeEmitts = TreeSetupContext['emit']
 
 /** @description M2Tree inject key */
 export const treeInjectKey: InjectionKey<TreeContext> = Symbol()
