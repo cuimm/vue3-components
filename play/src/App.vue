@@ -123,10 +123,68 @@
       />
     </m2-checkbox-group>
   </play-panel>
+
+  <!-- Button -->
+  <play-panel title="Button">
+    <m2-button @click="handleClick">Default</m2-button>
+    <m2-button
+      type="primary"
+      @click="handleClick"
+    >
+      Primary
+    </m2-button>
+    <m2-button type="success"> Success </m2-button>
+    <m2-button type="info">Info</m2-button>
+    <m2-button type="warning">Warning</m2-button>
+    <m2-button type="danger">Danger</m2-button>
+    <div style="padding: 10px 0">
+      <m2-button
+        size="large"
+        :disabled="true"
+        :round="true"
+        :loading="true"
+      >
+        large
+      </m2-button>
+      <m2-button
+        size="large"
+        :disabled="true"
+        :round="true"
+        :loading="true"
+      >
+        large
+        <template #loading>
+          <m2-icon>
+            <add-circle />
+          </m2-icon>
+        </template>
+      </m2-button>
+      <m2-button size="default">
+        default
+        <template #icon>
+          <m2-icon>
+            <arrow-undo />
+          </m2-icon>
+        </template>
+      </m2-button>
+      <m2-button
+        size="small"
+        icon-placement="right"
+        :loading="false"
+      >
+        small
+        <template #icon>
+          <m2-icon>
+            <arrow-redo />
+          </m2-icon>
+        </template>
+      </m2-button>
+    </div>
+  </play-panel>
 </template>
 
 <script setup lang="ts">
-import { AddCircle, ArrowUndo } from '@vicons/ionicons5'
+import { AddCircle, ArrowUndo, ArrowRedo } from '@vicons/ionicons5'
 import PlayPanel from './components/panel'
 import {
   selectedKeysRef,
@@ -144,6 +202,8 @@ import {
   indeterminate,
   handleCheckboxGroupChange
 } from './components/checkbox'
+
+import { handleClick } from './components/button'
 </script>
 
 <style lang="scss">
@@ -155,5 +215,10 @@ import {
 }
 .play-app__panel-container {
   background-color: #f0f0f0;
+}
+.m2-button {
+  & + .m2-button {
+    margin-left: 12px;
+  }
 }
 </style>

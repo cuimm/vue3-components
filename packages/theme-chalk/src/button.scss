@@ -1,0 +1,72 @@
+@use 'common/var.scss' as *;
+@use 'mixins/mixins.scss' as *;
+
+@include b(button) {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  height: 32px;
+  padding: 8px 15px;
+  white-space: nowrap;
+  cursor: pointer;
+  color: $m2-text-color-regular;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  transition: 0.1s;
+  font-weight: normal;
+  -webkit-user-select: none;
+  user-select: none;
+  vertical-align: middle;
+  -webkit-appearance: none;
+  background-color: $m2-white;
+  border: $m2-border;
+  border-color: $m2-border-color;
+
+  @include m(primary) {
+    @include button-variant($m2-white, $m2-color-primary, $m2-color-primary);
+  }
+
+  @include m(success) {
+    @include button-variant($m2-white, $m2-color-success, $m2-color-success);
+  }
+
+  @include m(warning) {
+    @include button-variant($m2-white, $m2-color-warning, $m2-color-warning);
+  }
+
+  @include m(danger) {
+    @include button-variant($m2-white, $m2-color-danger, $m2-color-danger);
+  }
+
+  @include m(info) {
+    @include button-variant($m2-white, $m2-color-info, $m2-color-info);
+  }
+
+  @include m(default) {
+    padding: 8px 15px;
+  }
+
+  @include m(large) {
+    height: 40px;
+    padding: 12px 19px;
+  }
+
+  @include m(small) {
+    height: 24px;
+    padding: 5px 11px;
+  }
+
+  @include when(disabled) {
+    &,
+    &:hover,
+    &:focus {
+      cursor: not-allowed;
+    }
+  }
+
+  @include when(round) {
+    border-radius: 20px;
+  }
+}
