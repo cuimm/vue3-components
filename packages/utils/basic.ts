@@ -9,6 +9,10 @@ export const hasOwn = (val: object, key: string): key is keyof typeof val =>
 
 export const isUndefined = (val: unknown): val is undefined => val === undefined
 
+export const isNull = (val: unknown): val is null => val === null
+
+export const IsNil = (val: unknown): val is null | undefined => isUndefined(val) || isNull(val)
+
 export const isSymbol = (val: unknown): val is symbol => typeof val === 'symbol'
 
 export const isString = (val: unknown): val is string => typeof val === 'string'

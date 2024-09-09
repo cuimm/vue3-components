@@ -1,4 +1,5 @@
 import type { ExtractPropTypes, PropType, SetupContext } from 'vue'
+import type Button from './button.vue'
 
 export const buttonTypes = ['default', 'primary', 'success', 'warning', 'danger', 'info', ''] as const
 export type ButtonTypes = (typeof buttonTypes)[number]
@@ -65,3 +66,5 @@ export const buttonEmits = {
 
 export type ButtonContextSetup = SetupContext<typeof buttonEmits>
 export type ButtonEmits = ButtonContextSetup['emit']
+
+export type ButtonInstance = InstanceType<typeof Button>

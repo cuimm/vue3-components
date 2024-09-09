@@ -1,6 +1,7 @@
 import { PropType, SetupContext, type ExtractPropTypes } from 'vue'
 import { UPDATE_MODEL_EVENT } from '@m2-ui/constants'
 import { isBoolean, isNumber, isString } from '@m2-ui/utils/basic'
+import type Checkbox from './checkbox.vue'
 
 export type CheckboxValueType = string | number | boolean
 
@@ -50,3 +51,5 @@ export type CheckboxSetupContext = SetupContext<typeof checkboxEmits>
 
 /** @description Checkbox CheckboxEmits */
 export type CheckboxEmits = CheckboxSetupContext['emit']
+
+export type CheckboxInstance = InstanceType<typeof Checkbox>

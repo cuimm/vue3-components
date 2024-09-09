@@ -1,4 +1,5 @@
 import { type PropType, type ExtractPropTypes, SetupContext, SlotsType, type InjectionKey, VNode } from 'vue'
+import type Tree from './tree.vue'
 
 export type KeyType = string | number
 
@@ -111,3 +112,5 @@ export type TreeEmitts = TreeSetupContext['emit']
 
 /** @description M2Tree inject key */
 export const treeInjectKey: InjectionKey<TreeContext> = Symbol()
+
+export type TreeInstance = InstanceType<typeof Tree>

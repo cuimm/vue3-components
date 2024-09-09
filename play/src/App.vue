@@ -181,6 +181,32 @@
       </m2-button>
     </div>
   </play-panel>
+
+  <!-- Input -->
+  <play-panel title="Input">
+    {{ input1 }}
+    <m2-input
+      v-model="input1"
+      placeholder="Please input"
+      :show-password="true"
+      :clearable="true"
+      @focus="handleInputFocus"
+      @blur="handleInputBlur"
+    >
+      <template #prefix>
+        <m2-icon>
+          <add-circle />
+        </m2-icon>
+      </template>
+      <template #suffix>
+        <m2-icon>
+          <add-circle />
+        </m2-icon>
+      </template>
+      <template #prepend> http://</template>
+      <template #append>.com</template>
+    </m2-input>
+  </play-panel>
 </template>
 
 <script setup lang="ts">
@@ -202,8 +228,8 @@ import {
   indeterminate,
   handleCheckboxGroupChange
 } from './components/checkbox'
-
 import { handleClick } from './components/button'
+import { input1, handleInputFocus, handleInputBlur } from './components/input'
 </script>
 
 <style lang="scss">

@@ -1,0 +1,108 @@
+@use './mixins/config.scss' as *;
+@use './mixins/mixins.scss' as *;
+@use './common/var.scss' as *;
+
+@include b(input) {
+  box-sizing: border-box;
+  display: inline-flex;
+  width: 100%;
+  font-size: 14px;
+
+  @include e(wrapper) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 1px 11px;
+    background-color: $m2-white;
+    box-shadow: $m2-border-color 0 0 0 1px inset;
+
+    &.#{$state-prefix}focus {
+      box-shadow: 0 0 0 1px $m2-color-primary inset;
+    }
+
+    &:hover {
+      box-shadow: 0 0 0 1px $m2-text-color-disabled inset;
+    }
+  }
+
+  @include e(inner) {
+    width: 100%;
+    height: 30px;
+    padding: 0;
+    box-sizing: border-box;
+    color: $m2-text-color-regular;
+    border: none;
+    background: none;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::placeholder {
+      color: $m2-text-color-placeholder;
+    }
+  }
+
+  @include e(prefix) {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+    height: 100%;
+    margin-right: 8px;
+    color: $m2-text-color-placeholder;
+    white-space: nowrap;
+  }
+
+  @include e(suffix) {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+    height: 100%;
+    margin-left: 8px;
+    color: $m2-text-color-placeholder;
+    white-space: nowrap;
+  }
+
+  @include e(icon) {
+    color: $m2-text-color-placeholder;
+    cursor: pointer;
+  }
+}
+
+@include b(input-group) {
+  display: inline-flex;
+  width: 100%;
+
+  @include e(prepend) {
+    display: inline-flex;
+    justify-content: center;
+    min-height: 100%;
+    padding: 0 20px;
+    line-height: 30px;
+    color: $m2-text-color-secondary;
+    border-right: 0;
+    background-color: $m2-fill-color-light;
+    border-bottom-right-radius: 0;
+    border-right: 0;
+    border-top-right-radius: 0;
+    box-shadow: 1px 0 0 0 $m2-border-color inset, 0 1px 0 0 $m2-border-color inset, 0 -1px 0 0 $m2-border-color inset;
+  }
+
+  @include e(append) {
+    display: inline-flex;
+    justify-content: center;
+    min-height: 100%;
+    padding: 0 20px;
+    line-height: 30px;
+    color: $m2-text-color-secondary;
+    border-left: none;
+    background-color: $m2-fill-color-light;
+    border-bottom-right-radius: 0;
+    border-left: 0;
+    border-top-right-radius: 0;
+    box-shadow: 0 1px 0 0 $m2-border-color inset, 0 -1px 0 0 $m2-border-color inset, -1px 0 0 0 $m2-border-color inset;
+  }
+}
