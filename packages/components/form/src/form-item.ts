@@ -6,6 +6,8 @@ import type FormItem from './form-item.vue'
 export const formItemValidateState = ['', 'success', 'error', 'validating'] as const
 export type FormItemValidateState = (typeof formItemValidateState)[number]
 
+export type FormItemProp = Arrayable<string>
+
 export const formItemProps = {
   prop: {
     type: String

@@ -46,6 +46,12 @@
     >
       提交
     </m2-button>
+    <m2-button
+      type="primary"
+      @click="validateUsername"
+    >
+      校验用户名
+    </m2-button>
   </play-panel>
   <!-- Icon -->
   <play-panel title="Icon">
@@ -278,7 +284,7 @@ import {
 } from './components/checkbox'
 import { handleClick } from './components/button'
 import { input1, handleInputFocus, handleInputBlur } from './components/input'
-import { formRef, model, validate, submit } from './components/form'
+import { formRef, model, validate, submit, validateUsername } from './components/form'
 </script>
 
 <style lang="scss">

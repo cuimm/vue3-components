@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, provide, reactive, ref, toRefs } from 'vue'
+import { computed, inject, onMounted, provide, reactive, ref, toRefs } from 'vue'
 import AsyncValidator from 'async-validator'
 import { isArray, isFunction, castArray, getProp } from '@m2-ui/utils'
 import { useNamespace } from '@m2-ui/hooks/use-namespace'
@@ -170,4 +170,14 @@ const context: FormItemContext = reactive({
 
 /** @description 向子组件provide FormItem的上下文 */
 provide(formItemContextKey, context)
+
+onMounted(() => {
+  formContext?.addField(context) // 将当前FormItem的上下文传递给父级Form
+})
+
+defineExpose({
+  validate: validate,
+  validateState: validateStateRef,
+  validateMessage: validateMessageRef
+})
 </script>
