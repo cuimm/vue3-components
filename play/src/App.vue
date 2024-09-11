@@ -1,8 +1,6 @@
 <template>
+  <!-- Form -->
   <play-panel title="Form">
-    <!-- <m2-form :model="model">
-      <m2-form-item> </m2-form-item>
-    </m2-form> -->
     <m2-form
       ref="formRef"
       :model="model"
