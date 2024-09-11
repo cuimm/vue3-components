@@ -1,4 +1,52 @@
 <template>
+  <play-panel title="Form">
+    <!-- <m2-form :model="model">
+      <m2-form-item> </m2-form-item>
+    </m2-form> -->
+    <m2-form
+      ref="formRef"
+      :model="model"
+      :rules="{
+        username: [{ min: 3, message: '至少输入3个字', trigger: ['blur'] }],
+        phone: [
+          { required: true, message: '请输入手机号', trigger: 'blur' },
+          { pattern: /^[0-9]+$/, message: '格式不正确' },
+          { max: 11, message: '至多11位数字', trigger: ['blur', 'change'] }
+        ]
+      }"
+      @validate="validate"
+    >
+      <m2-form-item
+        prop="username"
+        :rules="[
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+          { max: 5, message: '至多输入5个字', trigger: ['blur', 'change'] },
+          { pattern: /^[a-zA-Z]+$/, message: '只能输入英文字母' }
+        ]"
+      >
+        <template #label> <label>用户名</label></template>
+        <m2-input
+          v-model="model.username"
+          placeholder="请输入用户名"
+        />
+      </m2-form-item>
+      <m2-form-item
+        label="手机号"
+        prop="phone"
+      >
+        <m2-input
+          v-model="model.phone"
+          placeholder="请输入手机号"
+        />
+      </m2-form-item>
+    </m2-form>
+    <m2-button
+      type="primary"
+      @click="submit"
+    >
+      提交
+    </m2-button>
+  </play-panel>
   <!-- Icon -->
   <play-panel title="Icon">
     <m2-icon
@@ -230,6 +278,7 @@ import {
 } from './components/checkbox'
 import { handleClick } from './components/button'
 import { input1, handleInputFocus, handleInputBlur } from './components/input'
+import { formRef, model, validate, submit } from './components/form'
 </script>
 
 <style lang="scss">

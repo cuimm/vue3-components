@@ -34,6 +34,10 @@ export const inputProps = {
   label: {
     type: String,
     default: ''
+  },
+  validateEvent: {
+    type: Boolean,
+    default: true
   }
 } as const
 

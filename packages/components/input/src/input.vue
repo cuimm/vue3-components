@@ -81,13 +81,14 @@
 <script lang="ts" setup>
 import { computed, nextTick, onMounted, ref, useAttrs, watch } from 'vue'
 import { UPDATE_MODEL_EVENT } from '@m2-ui/constants'
-import { IsNil } from '@m2-ui/utils/basic'
+import { IsNil, debugWarn } from '@m2-ui/utils'
 import { useNamespace } from '@m2-ui/hooks/use-namespace'
 import { useFocus } from '@m2-ui/hooks/use-focus'
 import M2View from '@m2-ui/components/internal-icon/view'
 import M2Hide from '@m2-ui/components/internal-icon/hide'
 import M2CloseCircle from '@m2-ui/components/internal-icon/close-circle'
 import { inputEmits, inputProps } from './input'
+import { useFormItem } from '@m2-ui/components/form/src/hooks/use-form-item'
 
 defineOptions({
   name: 'M2Input',
@@ -95,6 +96,7 @@ defineOptions({
 })
 
 const ns = useNamespace('input')
+const { formItemContext } = useFormItem()
 const props = defineProps(inputProps)
 const emit = defineEmits(inputEmits)
 const attrs = useAttrs()
@@ -102,7 +104,11 @@ const attrs = useAttrs()
 const inputRef = ref<HTMLInputElement>()
 const passwordVisibleRef = ref(false)
 const hoveringRef = ref(false)
-const { isFocused: isFocusedRef, wrapperRef } = useFocus(inputRef)
+const { isFocused: isFocusedRef, wrapperRef } = useFocus(inputRef, {
+  afterBlur() {
+    validate('blur') // 触发表单校验
+  }
+})
 
 const showPwdVisible = computed(() => {
   return props.showPassword && !props.disabled && !props.readonly && (!!props.modelValue || isFocusedRef.value)
@@ -125,6 +131,13 @@ const nativeInputValue = computed(() => {
 })
 
 watch(nativeInputValue, () => setNativeInputValue())
+
+watch(
+  () => props.modelValue,
+  () => {
+    validate('change') // 触发表单校验
+  }
+)
 
 onMounted(() => {
   setNativeInputValue()
@@ -168,5 +181,11 @@ function handleMouseLeave(event: MouseEvent) {
 async function focus() {
   await nextTick()
   inputRef.value?.focus()
+}
+
+function validate(trigger: string) {
+  if (props.validateEvent) {
+    formItemContext?.validate(trigger).catch(error => debugWarn(error))
+  }
 }
 </script>
