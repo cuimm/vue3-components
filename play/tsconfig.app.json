@@ -20,5 +20,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "../typings/vue.shim.d.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "../typings/vue.shim.d.ts", "../typings/components.d.ts"] // 引入typings/components.d.ts后，该项目下使用@m2-components时会有属性提示
 }
