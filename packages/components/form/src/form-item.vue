@@ -10,7 +10,10 @@
     <div :class="ns.e('content')">
       <slot></slot>
       <div :class="ns.e('error')">
-        <slot name="error">
+        <slot
+          v-if="shouldShowError"
+          name="error"
+        >
           {{ validateMessageRef }}
         </slot>
       </div>
@@ -68,6 +71,11 @@ const normalizedRules = computed(() => {
   }
 
   return rules
+})
+
+/** @description 是否需要显示错误信息 */
+const shouldShowError = computed(() => {
+  return (formContext?.showMessage ?? true) && (props.showMessage ?? true) && validateStateRef.value === 'error'
 })
 
 /** @description 是否需要进行校验 */

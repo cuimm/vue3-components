@@ -31,6 +31,7 @@
       <m2-form-item
         label="手机号"
         prop="phone"
+        :show-message="true"
       >
         <m2-input
           v-model="model.phone"
