@@ -33,6 +33,11 @@ const isValidatable = computed(() => {
   return hasModel
 })
 
+/** @description 添加字段 */
+const addField: FormContext['addField'] = field => {
+  fields.push(field)
+}
+
 /**
  * 过滤表单项
  * @param fields form下所有的表单项上下文集合
@@ -54,11 +59,6 @@ const obtainValidateFields = (props: Arrayable<FormItemProp>) => {
     return []
   }
   return filteredFields
-}
-
-/** @description 添加字段 */
-const addField: FormContext['addField'] = field => {
-  fields.push(field)
 }
 
 /** @description 验证具体的某个字段 */
@@ -104,11 +104,18 @@ const validate = async (callback?: FormValidateCallback): FormValidationResult =
   return validateField(undefined, callback)
 }
 
+/** @description 清理某个字段的表单验证信息 */
+const clearValidate = (props: Arrayable<FormItemProp> = []) => {
+  const filteredFields = filterFields(fields, props)
+  filteredFields.forEach(field => field.clearValidate())
+}
+
 /** @description Form组件上下文 */
 const context: FormContext = reactive({
   ...toRefs(props),
   emit,
-  addField
+  addField,
+  clearValidate
 })
 
 /** @description 向子组件提供Form上下文数据 */
@@ -117,6 +124,7 @@ provide(formContextKey, context)
 /** @description Form expose */
 defineExpose({
   validate,
-  validateField
+  validateField,
+  clearValidate
 })
 </script>

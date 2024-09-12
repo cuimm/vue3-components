@@ -34,3 +34,7 @@ export function validateUsername() {
       console.log('userna用户名校验: 失败', error)
     })
 }
+
+export const clearValidate = () => {
+  formRef.value?.clearValidate()
+}

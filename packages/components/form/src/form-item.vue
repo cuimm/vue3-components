@@ -162,10 +162,18 @@ const setValidationMessage = (message: string) => {
   validateMessageRef.value = message
 }
 
+/** @description 清理表单验证信息 */
+const clearValidate = () => {
+  setValidationState('')
+  setValidationMessage('')
+}
+
 /** @description FormItem组件上下文 */
 const context: FormItemContext = reactive({
   ...toRefs(props),
-  validate
+  validateState: validateStateRef,
+  validate,
+  clearValidate
 })
 
 /** @description 向子组件provide FormItem的上下文 */
@@ -177,6 +185,7 @@ onMounted(() => {
 
 defineExpose({
   validate: validate,
+  clearValidate: clearValidate,
   validateState: validateStateRef,
   validateMessage: validateMessageRef
 })

@@ -50,7 +50,14 @@
     >
       校验用户名
     </m2-button>
+    <m2-button
+      type="primary"
+      @click="clearValidate"
+    >
+      清楚校验信息
+    </m2-button>
   </play-panel>
+
   <!-- Icon -->
   <play-panel title="Icon">
     <m2-icon
@@ -282,7 +289,7 @@ import {
 } from './components/checkbox'
 import { handleClick } from './components/button'
 import { input1, handleInputFocus, handleInputBlur } from './components/input'
-import { formRef, model, validate, submit, validateUsername } from './components/form'
+import { formRef, model, validate, submit, validateUsername, clearValidate } from './components/form'
 </script>
 
 <style lang="scss">

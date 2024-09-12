@@ -1,6 +1,6 @@
 import type { RuleItem, ValidateError, ValidateFieldsError } from 'async-validator'
 import { Arrayable } from '@m2-ui/utils/typescript'
-import type { FormItemProps } from './form-item'
+import type { FormItemProp, FormItemProps, FormItemValidateState } from './form-item'
 import { FormEmits, FormProps } from './form'
 
 /** @description FormItem回调 */
@@ -22,11 +22,14 @@ export interface FormItemRule extends RuleItem {
 
 /** @description FormItem上下文 */
 export interface FormItemContext extends FormItemProps {
+  validateState: FormItemValidateState
   validate: (trigger: string, callback?: FormValidateCallback) => FormValidationResult
+  clearValidate: () => void
 }
 
 /** @description Form上下文 */
 export interface FormContext extends FormProps {
-  addField: (field: FormItemContext) => void
   emit: FormEmits
+  addField: (field: FormItemContext) => void
+  clearValidate: (props?: Arrayable<FormItemProp>) => void
 }
