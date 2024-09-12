@@ -1,7 +1,7 @@
 <template>
-  <div :class="ns.b()">
+  <form :class="ns.b()">
     <slot></slot>
-  </div>
+  </form>
 </template>
 
 <script lang="ts" setup>
