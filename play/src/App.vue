@@ -33,9 +33,12 @@
     >
       <template #tip> <div style="font-size: 12px; color: #909399">点击按钮进行上传</div> </template>
       <m2-button type="primary"> 点击上传 </m2-button>
-      <template #file="{ file, index }"> {{ index }}. {{ file.name }} {{ file.size }}Byte </template>
+      <template #file="{ file, index }">
+        {{ index }}. {{ file.name }} {{ file.size }}Byte {{ file.percentage }}%
+      </template>
     </m2-upload>
   </play-panel>
+
   <play-panel title="Upload-drag">
     <m2-upload
       v-model:file-list="fileList"
@@ -52,12 +55,13 @@
       :on-error="onError"
       :on-pregress="onProgress"
       action="http://localhost:4000/upload"
-      :http-request="httpRequest"
+      :http-request2="httpRequest"
     >
       <m2-icon class="el-icon--upload"><arrow-up-circle-outline /></m2-icon>
       <div>拖拽上传</div>
     </m2-upload>
   </play-panel>
+
   <!-- Form -->
   <play-panel title="Form">
     <m2-form

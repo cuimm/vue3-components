@@ -12,7 +12,13 @@
         :file="file"
         :index="index"
       >
-        <span>{{ file.name }}</span>
+        <span :class="ns.be('list', 'name')">{{ file.name }}</span>
+        <span
+          v-if="file.status === 'uploading'"
+          :class="ns.be('list', 'percentage')"
+        >
+          {{ file.percentage }}%
+        </span>
       </slot>
     </li>
   </transition-group>

@@ -6,7 +6,8 @@ import {
   UploadFiles,
   UploadFile,
   UploadProps,
-  UploadHttpRequestOptions
+  UploadHttpRequestOptions,
+  UploadProgressEvent
 } from '@m2-ui/components'
 
 export const fileList = ref([{ name: 'cuimm' }])
@@ -54,7 +55,7 @@ export const onProgress: UploadProps['onProgress'] = (event, uploadFile, uploadF
   console.log('【onProgress】上传进度: ', event.percent, uploadFile, uploadFiles)
 }
 
-export const httpRequest = ({ file }: UploadHttpRequestOptions) => {
+export const httpRequest = ({ file, onProgress }: UploadHttpRequestOptions) => {
   console.log('【http-request】自定义文件上传')
 
   return axios
@@ -64,6 +65,11 @@ export const httpRequest = ({ file }: UploadHttpRequestOptions) => {
       {
         headers: {
           'Content-Type': 'multipart/form-data'
+        },
+        onUploadProgress: event => {
+          const e = event as unknown as UploadProgressEvent
+          e.percent = (event.progress || 0) * 100
+          onProgress(e)
         }
       }
     )
