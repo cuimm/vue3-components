@@ -9,6 +9,7 @@ declare module 'vue' {
     M2Input: typeof import('@m2-ui/components')['M2Input']
     M2Tree: typeof import('@m2-ui/components')['M2Tree']
     M2VirtualList: typeof import('@m2-ui/components')['M2VirtualList']
+    M2Upload: typeof import('@m2-ui/components')['M2Upload']
   }
 }
 

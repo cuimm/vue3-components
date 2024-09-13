@@ -1,4 +1,40 @@
 <template>
+  <!-- <play-panel title="Form">
+    {{ fileList }}
+    <el-upload
+      v-model:file-list="fileList"
+      :multiple="true"
+      :limit="20"
+      :on-exceed="onExceed"
+      :on-start="onStart"
+      :on-change="onChange"
+      :http-request="httpRequest"
+    >
+      <el-button> 点击上传 </el-button>
+    </el-upload>
+  </play-panel> -->
+
+  <!-- Upload -->
+  <play-panel title="Upload">
+    {{ fileList }}
+    <m2-upload
+      v-model:file-list="fileList"
+      :multiple="true"
+      :limit="20"
+      :before-upload="handleBeforeUpload"
+      :before-remove="handleBeforeRemove"
+      :on-exceed="onExceed"
+      :on-start="onStart"
+      :on-change="onChange"
+      :on-success="onSuccess"
+      :on-error="onError"
+      :on-pregress="onProgress"
+      action="http://localhost:4000/upload"
+      :http-request="httpRequest"
+    >
+      <m2-button type="primary"> 点击上传 </m2-button>
+    </m2-upload>
+  </play-panel>
   <!-- Form -->
   <play-panel title="Form">
     <m2-form
@@ -291,6 +327,18 @@ import {
 import { handleClick } from './components/button'
 import { input1, handleInputFocus, handleInputBlur } from './components/input'
 import { formRef, model, validate, submit, validateUsername, clearValidate } from './components/form'
+import {
+  fileList,
+  handleBeforeUpload,
+  handleBeforeRemove,
+  onExceed,
+  onStart,
+  onChange,
+  onError,
+  onSuccess,
+  onProgress,
+  httpRequest
+} from './components/upload'
 </script>
 
 <style lang="scss">
