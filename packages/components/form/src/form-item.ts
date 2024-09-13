@@ -1,7 +1,6 @@
 import type { ExtractPropTypes, PropType } from 'vue'
 import type { Arrayable } from '@m2-ui/utils/typescript'
 import type { FormItemRule } from './types'
-import type FormItem from './form-item.vue'
 
 export const formItemValidateState = ['', 'success', 'error', 'validating'] as const
 export type FormItemValidateState = (typeof formItemValidateState)[number]
@@ -25,5 +24,3 @@ export const formItemProps = {
 }
 
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>
-
-export type ForItemInstance = InstanceType<typeof FormItem>

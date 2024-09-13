@@ -76,7 +76,7 @@ export const baseUploadProps = {
     default: false
   },
   /** @description 是否禁用上传	*/
-  disbaled: {
+  disabled: {
     type: Boolean,
     default: false
   },

@@ -2,7 +2,6 @@ import type { ExtractPropTypes, PropType, SetupContext } from 'vue'
 import type { Arrayable } from '@m2-ui/utils'
 import { isBoolean, isString } from '@m2-ui/utils'
 import type { FormItemRule } from './types'
-import type Form from './form.vue'
 
 export const formProps = {
   model: {
@@ -14,6 +13,10 @@ export const formProps = {
   showMessage: {
     type: Boolean,
     default: true
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 } as const
 
@@ -26,5 +29,3 @@ export const formEmits = {
 
 export type FormSetupContext = SetupContext<typeof formEmits>
 export type FormEmits = FormSetupContext['emit']
-
-export type FormInstance = InstanceType<typeof Form>

@@ -1,4 +1,16 @@
 <template>
+  <el-upload
+    class="upload-demo"
+    drag
+    action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+    multiple
+  >
+    <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+    <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
+    <template #tip>
+      <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
+    </template>
+  </el-upload>
   <!-- <play-panel title="Form">
     {{ fileList }}
     <el-upload
@@ -32,7 +44,30 @@
       action="http://localhost:4000/upload"
       :http-request="httpRequest"
     >
+      <template #tip> <div style="font-size: 12px; color: #909399">点击按钮进行上传</div> </template>
       <m2-button type="primary"> 点击上传 </m2-button>
+    </m2-upload>
+  </play-panel>
+  <play-panel title="Upload-drag">
+    <m2-upload
+      v-model:file-list="fileList"
+      :multiple="true"
+      :limit="20"
+      :disabled="false"
+      :drag="true"
+      :before-upload="handleBeforeUpload"
+      :before-remove="handleBeforeRemove"
+      :on-exceed="onExceed"
+      :on-start="onStart"
+      :on-change="onChange"
+      :on-success="onSuccess"
+      :on-error="onError"
+      :on-pregress="onProgress"
+      action="http://localhost:4000/upload"
+      :http-request="httpRequest"
+    >
+      <m2-icon class="el-icon--upload"><arrow-up-circle-outline /></m2-icon>
+      <div>拖拽上传</div>
     </m2-upload>
   </play-panel>
   <!-- Form -->
@@ -306,7 +341,7 @@
 </template>
 
 <script setup lang="ts">
-import { AddCircle, ArrowUndo, ArrowRedo } from '@vicons/ionicons5'
+import { AddCircle, ArrowUndo, ArrowRedo, ArrowUpCircleOutline } from '@vicons/ionicons5'
 import PlayPanel from './components/panel'
 import {
   selectedKeysRef,

@@ -6,4 +6,27 @@
   @include e(input) {
     display: none;
   }
+
+  @include when(disabled) {
+    background-color: $m2-fill-color-light;
+    cursor: not-allowed;
+
+    .#{$namespace}-upload-dragger {
+      background-color: $m2-fill-color-light;
+      color: $m2-color-disabled;
+      cursor: not-allowed;
+    }
+  }
+}
+
+@include b(upload-dragger) {
+  padding: 40px 10px;
+  background-color: $m2-white;
+  border: 1px dashed $m2-border-color;
+  border-radius: 6px;
+  box-sizing: border-box;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }

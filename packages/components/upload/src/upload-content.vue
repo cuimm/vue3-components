@@ -1,9 +1,19 @@
 <template>
   <div
-    :class="ns.b()"
+    :class="[ns.b(), ns.is('drag', drag), ns.is('disabled', disabled)]"
     @click="handleWrapperClick"
   >
-    <slot></slot>
+    <template v-if="drag">
+      <m2-upload-dragger
+        :disabled="disabled"
+        @file="uploadFiles"
+      >
+        <slot />
+      </m2-upload-dragger>
+    </template>
+    <template v-else>
+      <slot></slot>
+    </template>
     <input
       ref="inputRef"
       type="file"
@@ -20,9 +30,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useNamespace } from '@m2-ui/hooks/use-namespace'
+import M2UploadDragger from './upload-dragger.vue'
 import { UploadHttpRequestOptions, UploadRawFile } from './types'
 import { genFileId } from './upload'
 import { uploadContentProps } from './upload-content'
+
+defineOptions({ inheritAttrs: false })
 
 const ns = useNamespace('upload')
 const props = defineProps(uploadContentProps)
@@ -116,7 +129,9 @@ const handleChange = (e: Event) => {
 
 /** @description 最外容器的点击事件 */
 const handleWrapperClick = () => {
-  inputRef.value!.value = ''
-  inputRef.value?.click()
+  if (!props.disabled) {
+    inputRef.value!.value = ''
+    inputRef.value?.click()
+  }
 }
 </script>

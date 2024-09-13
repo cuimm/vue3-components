@@ -2,6 +2,9 @@
   <m2-upload-content v-bind="uploadContentProps">
     <slot></slot>
   </m2-upload-content>
+
+  <slot name="tip"></slot>
+
   {{ uploadFiles }}
 </template>
 
