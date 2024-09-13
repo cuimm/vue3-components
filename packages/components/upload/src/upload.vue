@@ -5,12 +5,27 @@
 
   <slot name="tip"></slot>
 
-  {{ uploadFiles }}
+  <m2-upload-list
+    v-if="showFileList"
+    :files="uploadFiles"
+  >
+    <template
+      v-if="$slots.file"
+      #default="{ file, index }"
+    >
+      <slot
+        name="file"
+        :file="file"
+        :index="index"
+      />
+    </template>
+  </m2-upload-list>
 </template>
 
 <script lang="ts" setup>
 import { computed, watch } from 'vue'
 import M2UploadContent from './upload-content.vue'
+import M2UploadList from './upload-list.vue'
 import type { UploadContentProps } from './upload-content'
 import { genFileId, uploadProps } from './upload'
 import { useHandler } from './use-handler'

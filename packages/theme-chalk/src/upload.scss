@@ -30,3 +30,21 @@
   position: relative;
   overflow: hidden;
 }
+
+@include b(upload-list) {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+
+  @include e(item) {
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    padding-bottom: 5px;
+    font-size: 14px;
+    color: $m2-text-color-regular;
+    border-radius: 4px;
+    transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  }
+}

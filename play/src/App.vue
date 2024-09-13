@@ -1,18 +1,5 @@
 <template>
-  <el-upload
-    class="upload-demo"
-    drag
-    action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
-    multiple
-  >
-    <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-    <div class="el-upload__text">Drop file here or <em>click to upload</em></div>
-    <template #tip>
-      <div class="el-upload__tip">jpg/png files with a size less than 500kb</div>
-    </template>
-  </el-upload>
-  <!-- <play-panel title="Form">
-    {{ fileList }}
+  <play-panel title="Form">
     <el-upload
       v-model:file-list="fileList"
       :multiple="true"
@@ -24,7 +11,7 @@
     >
       <el-button> 点击上传 </el-button>
     </el-upload>
-  </play-panel> -->
+  </play-panel>
 
   <!-- Upload -->
   <play-panel title="Upload">
@@ -46,6 +33,7 @@
     >
       <template #tip> <div style="font-size: 12px; color: #909399">点击按钮进行上传</div> </template>
       <m2-button type="primary"> 点击上传 </m2-button>
+      <template #file="{ file, index }"> {{ index }}. {{ file.name }} {{ file.size }}Byte </template>
     </m2-upload>
   </play-panel>
   <play-panel title="Upload-drag">
