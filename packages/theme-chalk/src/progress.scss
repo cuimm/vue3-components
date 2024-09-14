@@ -1,0 +1,25 @@
+@use './mixins/config.scss' as *;
+@use './mixins/mixins.scss' as *;
+@use './common/var.scss' as *;
+
+@include b(progress) {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+@include b(progress-bar) {
+  width: 100%;
+
+  @include e(outer) {
+    background-color: $m2-border-color-lighter;
+  }
+
+  @include e(inner) {
+    width: 50%;
+    height: 100%;
+    background-color: $m2-color-primary;
+    border-radius: 100px;
+    transition: width 0.6s ease;
+  }
+}

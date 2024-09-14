@@ -17,7 +17,10 @@
           v-if="file.status === 'uploading'"
           :class="ns.be('list', 'percentage')"
         >
-          {{ file.percentage }}%
+          <m2-progress
+            :percentage="file.percentage"
+            :stroke-width="2"
+          />
         </span>
       </slot>
     </li>
@@ -26,6 +29,7 @@
 
 <script lang="ts" setup>
 import { useNamespace } from '@m2-ui/hooks'
+import M2Progress from '@m2-ui/components/progress'
 import { uploadListProps } from './upload-list'
 
 defineProps(uploadListProps)

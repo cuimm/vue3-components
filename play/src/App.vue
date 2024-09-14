@@ -1,4 +1,18 @@
 <template>
+  <!-- Progress -->
+  <play-panel title="Progress">
+    <m2-progress
+      :percentage="30"
+      :color="customColors"
+      class="play-app__panel-item"
+    />
+    <m2-progress
+      :percentage="30"
+      :color="customColorMethod"
+      class="play-app__panel-item"
+    />
+  </play-panel>
+
   <play-panel title="Form">
     <el-upload
       v-model:file-list="fileList"
@@ -33,9 +47,9 @@
     >
       <template #tip> <div style="font-size: 12px; color: #909399">点击按钮进行上传</div> </template>
       <m2-button type="primary"> 点击上传 </m2-button>
-      <template #file="{ file, index }">
+      <!-- <template #file="{ file, index }">
         {{ index }}. {{ file.name }} {{ file.size }}Byte {{ file.percentage }}%
-      </template>
+      </template> -->
     </m2-upload>
   </play-panel>
 
@@ -366,6 +380,7 @@ import {
   onProgress,
   httpRequest
 } from './components/upload'
+import { customColors, customColorMethod } from './components/progress'
 </script>
 
 <style lang="scss">
@@ -382,5 +397,8 @@ import {
   & + .m2-button {
     margin-left: 12px;
   }
+}
+.play-app__panel-item {
+  margin-bottom: 20px;
 }
 </style>
