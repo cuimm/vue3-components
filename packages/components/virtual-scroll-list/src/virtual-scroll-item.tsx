@@ -1,4 +1,5 @@
 import { defineComponent, onMounted, onUpdated, ref } from 'vue'
+import { useNamespace } from '@m2-ui/hooks'
 import { virtualScrollItemEmits, virtualScrollItemProps } from './virtual-scroll-item'
 
 export default defineComponent({
@@ -6,6 +7,7 @@ export default defineComponent({
   props: virtualScrollItemProps,
   emits: virtualScrollItemEmits,
   setup(props, { emit }) {
+    const ns = useNamespace('virtual-scroll-item')
     const rootRef = ref<HTMLElement>()
 
     const onItemResize = () => {
@@ -23,6 +25,7 @@ export default defineComponent({
           <div
             ref={rootRef}
             key={uniqueKey}
+            class={ns.b()}
           >
             <Comp dataSource={dataSource} />
           </div>

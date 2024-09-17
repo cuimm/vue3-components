@@ -31,7 +31,7 @@ export default defineComponent({
 
     /** @description 组件每一项高度变化时 */
     const onItemResize = (uniqueKey: string | number, offsetHeight: number) => {
-      console.log('item resize', uniqueKey, offsetHeight)
+      // console.log('item resize', uniqueKey, offsetHeight)
 
       virtual.saveSize(uniqueKey, offsetHeight)
     }
@@ -43,7 +43,7 @@ export default defineComponent({
       const { start, end } = rangeDataRef.value! || {}
       const { dataSources, dataKey, dataRendererComponent: DataRendererComponent } = props
 
-      for (let index = start; index < end; index++) {
+      for (let index = start; index <= end; index++) {
         const dataSource = dataSources[index]
         const uniqueKey = dataSource[dataKey]
 
@@ -98,7 +98,12 @@ export default defineComponent({
           style={{ height: `${props.height}px` }}
           onScroll={onScroll}
         >
-          <div style={containerStyle.value}>{genDataRendererComponent()}</div>
+          <div
+            style={containerStyle.value}
+            class={ns.e('container')}
+          >
+            {genDataRendererComponent()}
+          </div>
         </div>
       )
     }

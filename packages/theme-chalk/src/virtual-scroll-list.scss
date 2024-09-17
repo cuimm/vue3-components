@@ -5,3 +5,21 @@
 @include b(virtual-scroll-list) {
   overflow-y: auto;
 }
+
+.m2-virtual-scroll-item {
+  // overflow: hidden;
+  &::after {
+    display: table;
+    content: '';
+    clear: both;
+  }
+}
+/*
+CSS中子容器有margin，父容器怎么正确计算高度？
+
+当CSS中子容器有margin时，父容器的高度可能会出现问题，导致计算错误。这种现象通常被称为“margin collapse”。
+解决这个问题的方法有：
+  1. 使用border或padding来代替margin。
+  2. 使用overflow: auto或overflow: hidden属性来触发BFC（Block Formatting Context），这样父容器就会包括子容器的margin。
+  3. 使用clearfix技巧，在父容器的最后添加一个伪元素，设置clear: both，以防止父容器高度塌陷。
+*/

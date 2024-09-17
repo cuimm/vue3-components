@@ -1,11 +1,7 @@
 <template>
-  <div
-    class="play-virtual-scroll-list-item"
-    :style="{ height: '80px' }"
-    :data-index="dataSource.id"
-  >
-    <h2>{{ dataSource.index }}.{{ dataSource.title }}</h2>
-    <p>{{ dataSource.desc }}</p>
+  <div class="play-virtual-scroll-list-item">
+    <h2 :style="{ color: 'red' }">{{ dataSource.index + 1 }}.{{ dataSource.title }}</h2>
+    <p class="play-virtual-scroll-list-item__desc">{{ dataSource.desc }}</p>
   </div>
 </template>
 
@@ -24,11 +20,16 @@ defineProps({
 
 <style lang="scss">
 .play-virtual-scroll-list-item {
+  margin-bottom: 50px;
   font-size: 12px;
 
   h2 {
     padding: 0;
     margin: 0;
   }
+}
+.play-virtual-scroll-list-item__desc {
+  padding: 0;
+  margin: 0;
 }
 </style>
