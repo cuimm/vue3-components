@@ -2,6 +2,7 @@ import { computed, defineComponent, onBeforeMount, ref } from 'vue'
 import { useNamespace } from '@m2-ui/hooks'
 import { DataRangeOption, virtualScrollListProps } from './virtual-scroll-list.ts'
 import { initVirtual } from './use-handler.ts'
+import M2VirtualScrollItem from './virtual-scroll-item.tsx'
 
 export default defineComponent({
   name: 'M2VirtualScrollList',
@@ -28,6 +29,13 @@ export default defineComponent({
       return dataSources.map(dataSource => dataSource[dataKey])
     })
 
+    /** @description 组件每一项高度变化时 */
+    const onItemResize = (uniqueKey: string | number, offsetHeight: number) => {
+      console.log('item resize', uniqueKey, offsetHeight)
+
+      virtual.saveSize(uniqueKey, offsetHeight)
+    }
+
     /** @description 渲染用户自定义的Item组件 */
     const genDataRendererComponent = () => {
       const slots = []
@@ -37,13 +45,15 @@ export default defineComponent({
 
       for (let index = start; index < end; index++) {
         const dataSource = dataSources[index]
-        const key = dataSource[dataKey]
+        const uniqueKey = dataSource[dataKey]
 
-        if (DataRendererComponent) {
+        if (dataSource && DataRendererComponent) {
           slots.push(
-            <DataRendererComponent
-              key={key}
+            <M2VirtualScrollItem
+              uniqueKey={uniqueKey}
               dataSource={dataSource}
+              component={DataRendererComponent}
+              onItemResize={onItemResize}
             />
           )
         }
