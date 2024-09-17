@@ -90,7 +90,7 @@ export function initVirtual(param: VirtualOptions, update: UpdataRange) {
       return Math.floor(offsetValue / getEstimateSize())
     } else {
       let low = 0
-      let high = param.uniqueIds.length // - 1
+      let high = param.uniqueIds.length
       let middle = 0
       let middleOffset = 0
       while (low <= high) {

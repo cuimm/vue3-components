@@ -31,8 +31,6 @@ export default defineComponent({
 
     /** @description 组件每一项高度变化时 */
     const onItemResize = (uniqueKey: string | number, offsetHeight: number) => {
-      // console.log('item resize', uniqueKey, offsetHeight)
-
       virtual.saveSize(uniqueKey, offsetHeight)
     }
 
