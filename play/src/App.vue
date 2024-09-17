@@ -1,4 +1,15 @@
 <template>
+  <!-- VirtualScrollList -->
+  <play-panel title="Virtual-scroll-list">
+    <m2-virtual-scroll-list
+      :data-sources="dataSources"
+      data-key="id"
+      :height="500"
+      :data-renderer-component="PlayVirtualScrollItem as unknown as DefineComponent"
+      class="play-virtual-scroll-list"
+    />
+  </play-panel>
+
   <!-- Progress -->
   <play-panel title="Progress">
     <m2-progress
@@ -11,20 +22,6 @@
       :color="customColorMethod"
       class="play-app__panel-item"
     />
-  </play-panel>
-
-  <play-panel title="Form">
-    <el-upload
-      v-model:file-list="fileList"
-      :multiple="true"
-      :limit="20"
-      :on-exceed="onExceed"
-      :on-start="onStart"
-      :on-change="onChange"
-      :http-request="httpRequest"
-    >
-      <el-button> 点击上传 </el-button>
-    </el-upload>
   </play-panel>
 
   <!-- Upload -->
@@ -347,6 +344,7 @@
 </template>
 
 <script setup lang="ts">
+import { DefineComponent } from 'vue'
 import { AddCircle, ArrowUndo, ArrowRedo, ArrowUpCircleOutline } from '@vicons/ionicons5'
 import PlayPanel from './components/panel'
 import {
@@ -381,6 +379,8 @@ import {
   httpRequest
 } from './components/upload'
 import { customColors, customColorMethod } from './components/progress'
+import PlayVirtualScrollItem from './components/virtual-scroll-item.vue'
+import { dataSources } from './components/virtual-scroll-list'
 </script>
 
 <style lang="scss">
@@ -400,5 +400,8 @@ import { customColors, customColorMethod } from './components/progress'
 }
 .play-app__panel-item {
   margin-bottom: 20px;
+}
+.play-virtual-scroll-list {
+  border: 1px solid red;
 }
 </style>

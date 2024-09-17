@@ -11,6 +11,7 @@ declare module 'vue' {
     M2VirtualList: typeof import('@m2-ui/components')['M2VirtualList']
     M2Upload: typeof import('@m2-ui/components')['M2Upload']
     M2Progress: typeof import('@m2-ui/components')['M2Progress']
+    M2VirtualScrollList: typeof import('@m2-ui/components')['M2VirtualScrollList']
   }
 }
 

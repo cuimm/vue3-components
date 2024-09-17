@@ -9,7 +9,8 @@ import {
   M2Form,
   M2FormItem,
   M2Upload,
-  M2Progress
+  M2Progress,
+  M2VirtualScrollList
 } from '@m2-ui/components'
 
 export default {
@@ -24,7 +25,8 @@ export default {
       M2Form,
       M2FormItem,
       M2Upload,
-      M2Progress
+      M2Progress,
+      M2VirtualScrollList
     ]
     plugins.forEach(plugin => {
       app.use(plugin)

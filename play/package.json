@@ -9,9 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/mockjs": "^1.0.10",
     "@vicons/ionicons5": "^0.12.0",
     "axios": "^1.7.7",
     "element-plus": "^2.8.2",
+    "mockjs": "^1.1.0",
     "vue": "^3.4.37"
   },
   "devDependencies": {
