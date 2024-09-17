@@ -84,8 +84,6 @@ export function initVirtual(param: VirtualOptions, update: UpdataRange) {
 
   /** @description 划过去了多少个 */
   function getScrollOvers() {
-    console.log('getScrollOvers')
-
     if (isFixedSize()) {
       return Math.floor(offsetValue / getEstimateSize())
     } else {
